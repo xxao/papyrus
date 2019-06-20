@@ -83,7 +83,7 @@ Article Query Grammar
 ---------------------
 
 - **space** - &&-like operand (e.g. *mmass protein*)
-- *AND**  - &&-like operand (e.g. *mmass AND protein*)
+- **AND**  - &&-like operand (e.g. *mmass AND protein*)
 - **OR**  - |-like operand (e.g. *mmass OR protein*)
 - **"quote"** or **'quote'** - exact string sequence (e.g. *"mmass data miner"*)
 - **[TAG]** - restricts search to specific database field (e.g. *10.1021/ac100818g[DOI]*)
