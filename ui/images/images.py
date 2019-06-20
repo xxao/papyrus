@@ -1,6 +1,10 @@
 #  Created byMartin.cz
 #  Copyright (c) Martin Strohalm. All rights reserved.
 
+# most of the icons are taken made by Paulo Guillen
+# https://www.deviantart.com/guillendesign
+# CC Attribution-Noncommercial-No Derivate 4.0
+
 # import modules
 import wx
 

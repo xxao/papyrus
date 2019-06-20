@@ -1,6 +1,8 @@
 #  Created byMartin.cz
 #  Copyright (c) Martin Strohalm. All rights reserved.
 
+#  Adapted from Peter Norvig courses. https://norvig.com
+
 # import modules
 import re
 
