@@ -37,7 +37,7 @@ SOFTWARE.
 Distribution
 ------------
 
-Currently there is just a Windows distribution available.
+Currently there is just a `Windows distribution<dist/>`_ available.
 
 
 Requirements to run from the source
