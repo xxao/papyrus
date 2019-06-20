@@ -5,7 +5,7 @@ Papyrus
 Papyrus is a lightweight article manager. A simple tool to organize, tag and search articles and retrieve their metadata
 from PubMed.
 
-.. image:: https://raw.githubusercontent.com/xxao/papyrus/dist/screenshot.png
+.. image:: https://raw.githubusercontent.com/xxao/papyrus/master/dist/screenshot.png
 
 
 License
