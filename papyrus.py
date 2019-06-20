@@ -1,5 +1,5 @@
 #  Created byMartin.cz
-#  Copyright (c) 2014-2019 Martin Strohalm. All rights reserved.
+#  Copyright (c) Martin Strohalm. All rights reserved.
 
 # import modules
 import sys
