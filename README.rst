@@ -82,10 +82,10 @@ Article Query Tags
 Article Query Grammar
 ---------------------
 
-**space** - &&-like operand (e.g. *mmass protein*)
-*AND**  - &&-like operand (e.g. *mmass AND protein*)
-**OR**  - |-like operand (e.g. *mmass OR protein*)
-**"quote"** or **'quote'** - exact string sequence (e.g. *"mmass data miner"*)
-**[TAG]** - restricts search to specific database field (e.g. *10.1021/ac100818g[DOI]*)
-**(group)** - grouping of logical expressions (e.g. *strohalm AND (kodicek OR havlicek)*)
-**NOT** - negation of expression (e.g. *NOT strohalm AND kodicek*)
+- **space** - &&-like operand (e.g. *mmass protein*)
+- *AND**  - &&-like operand (e.g. *mmass AND protein*)
+- **OR**  - |-like operand (e.g. *mmass OR protein*)
+- **"quote"** or **'quote'** - exact string sequence (e.g. *"mmass data miner"*)
+- **[TAG]** - restricts search to specific database field (e.g. *10.1021/ac100818g[DOI]*)
+- **(group)** - grouping of logical expressions (e.g. *strohalm AND (kodicek OR havlicek)*)
+- **NOT** - negation of expression (e.g. *NOT strohalm AND kodicek*)
