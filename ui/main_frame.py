@@ -1319,25 +1319,32 @@ class MainFrame(wx.Frame):
             try: webbrowser.open(link, autoraise=1)
             except: pass
         
-        # show article by PMID
+        # show article by PMID (in PubMed)
         elif parameter == 'pmid':
             link = "https://ncbi.nlm.nih.gov/pubmed/%s" % value
             try: webbrowser.open(link, autoraise=1)
             except: pass
         
-        # search by author
+        # search by author (in PubMed)
         elif parameter == 'author':
             query = "%s[AU]" % value
             self._search_repository(query)
         
-        # search by journal
+        # search by journal (in PubMed)
         elif parameter == 'journal':
             query = "%s[JT]" % value
             self._search_repository(query)
         
-        # show author's articles in library
+        # show articles by author (in library)
         elif parameter == 'authorid':
             query = "%s[AUID]" % value
+            self._articles_view.SetMasterQuery(None)
+            self._articles_view.SetQuery(query)
+            self._articles_view.ShowArticles()
+        
+        # show articles by label (in library)
+        elif parameter == 'labelid':
+            query = "%s[LABELID]" % value
             self._articles_view.SetMasterQuery(None)
             self._articles_view.SetQuery(query)
             self._articles_view.ShowArticles()

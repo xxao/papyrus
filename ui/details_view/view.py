@@ -192,8 +192,10 @@ class DetailsView(wx.Panel):
         html += '<ul id="authors">%s</ul>' % authors if authors else ""
         
         # add labels
-        labels = ", ".join(x.title for x in self._article.labels)
-        html += '<p id="labels"><strong>LABELS:</strong> %s</p>' % labels if labels else ""
+        labels = []
+        for label in self._article.labels:
+            labels.append('<a href="papyrus:?labelid=%s" title="Show articles in library">%s</a>' % (label.dbid, label.title))
+        html += '<p id="labels"><strong>LABELS:</strong> %s</p>' % ", ".join(labels) if labels else ""
         
         # add notes
         notes = self._article.notes or ""
