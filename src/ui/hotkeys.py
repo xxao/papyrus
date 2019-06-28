@@ -1,0 +1,26 @@
+#  Created byMartin.cz
+#  Copyright (c) Martin Strohalm. All rights reserved.
+
+# import modules
+import wx
+from . ids import *
+
+ACCELERATORS = []
+
+HK_VIEW_COLLECTIONS = "F2"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F2, ID_VIEW_COLLECTIONS))
+
+HK_VIEW_PDF = "F3"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F3, ID_VIEW_PDF))
+
+HK_VIEW_DETAILS = "F4"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F4, ID_VIEW_DETAILS))
+
+HK_ARTICLES_EDIT = "F5"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F5, ID_ARTICLES_EDIT))
+
+HK_ARTICLES_MATCH = "F6"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F6, ID_ARTICLES_MATCH))
+
+HK_REPOSITORY_SEARCH = "F7"
+ACCELERATORS.append((wx.ACCEL_NORMAL, wx.WXK_F7, ID_REPOSITORY_SEARCH))
