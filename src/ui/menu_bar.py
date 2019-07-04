@@ -43,6 +43,7 @@ class MenuBar(wx.MenuBar):
         self._library = library
         
         # enable menu items
+        self.Enable(ID_COLLECTIONS_EMPTY_TRASH, self._library is not None)
         self.Enable(ID_COLLECTIONS_NEW_MANUAL, self._library is not None)
         self.Enable(ID_COLLECTIONS_NEW_SMART, self._library is not None)
         self.Enable(ID_LABELS_NEW, self._library is not None)
