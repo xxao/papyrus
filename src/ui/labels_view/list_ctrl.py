@@ -43,14 +43,14 @@ class LabelsList(wx.Panel):
         """Makes panel UI."""
         
         # init list control
-        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER|wxdv.DV_ROW_LINES|wxdv.DV_VERT_RULES)
+        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER | wxdv.DV_ROW_LINES | wxdv.DV_VERT_RULES)
         self._list_model = LabelsListModel(self._labels)
         self._list_ctrl.AssociateModel(self._list_model)
 
         # add columns
         self._list_ctrl.AppendTextColumn("Expander", 0, width=0, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
         self._list_ctrl.AppendToggleColumn("", 1, width=30, mode=wxdv.DATAVIEW_CELL_ACTIVATABLE, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Label", 2, width=160, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
+        self._list_ctrl.AppendTextColumn("Label", 2, width=235, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
         
         # hide expander column
         self._list_ctrl.Columns[0].SetHidden(True)
@@ -66,4 +66,4 @@ class LabelsList(wx.Panel):
         
         # add to sizer
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND|wx.ALL, mwx.LIST_CTRL_SPACE)
+        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND | wx.ALL, mwx.LIST_CTRL_SPACE)

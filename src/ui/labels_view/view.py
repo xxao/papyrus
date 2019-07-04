@@ -10,7 +10,6 @@ from .. import events
 
 from .list_ctrl import LabelsList
 from .top_bar import LabelsTopBar
-from .edit_dlg import LabelsEditDlg
 
 
 class LabelsView(wx.Dialog):
@@ -21,11 +20,12 @@ class LabelsView(wx.Dialog):
         """Initializes labels view panel."""
         
         # init panel
-        wx.Dialog.__init__(self, parent, -1, size=(213, 350), title="Labels", style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, -1, size=(300, 350), title="Labels", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         
         # init buffers
         self._articles = articles
         self._labels = labels
+        self._search = None
         
         # make UI
         self._make_ui()
@@ -38,38 +38,55 @@ class LabelsView(wx.Dialog):
         # set min size
         self.SetMinSize(self.GetSize())
         
-        # show labels
-        self._list.SetLabels(self._labels)
+        # update list
+        self._show_labels()
     
     
-    def _on_new(self, evt=None):
-        """Handles add new label event."""
+    def _on_search(self, evt=None):
+        """Handles search event."""
         
-        # init label
-        label = core.Label()
-        label.checked = True
-        
-        # get used titles
-        used_titles = [x.title for x in self._labels]
-        
-        # raise dialog
-        dlg = LabelsEditDlg(self, label, used_titles=used_titles)
-        response = dlg.ShowModal()
-        dlg.Destroy()
-        
-        # check response
-        if response != wx.ID_OK:
-            return
-        
-        # add label to buffer
-        self._labels.append(label)
+        # get current label
+        self._search = self._top_bar.GetLabelValue()
+        if not self._search:
+            self._search = None
         
         # update list
-        self._list.SetLabels(self._labels)
+        self._show_labels()
+    
+    
+    def _on_add(self, evt=None):
+        """Handles add label event."""
+        
+        # check current label
+        if not self._search:
+            return
+        
+        # get same labels
+        same = [x for x in self._labels if x.title == self._search]
+        
+        # add as new label
+        if not same:
+            
+            # init new label
+            label = core.Label()
+            label.checked = True
+            label.title = self._search
+            
+            # add label to buffer
+            self._labels.append(label)
+        
+        # mark as checked
+        elif self._articles:
+            for label in same:
+                label.checked = True
+        
+        # clean search
+        self._search = None
+        self._top_bar.SetLabelValue(None)
     
     
     def _on_apply(self, evt=None):
-        """Handles apply event."""
+        """Handles apply labels event."""
         
         # get checked labels
         labels = [x for x in self._labels if x.checked]
@@ -98,10 +115,32 @@ class LabelsView(wx.Dialog):
         self._list = LabelsList(self)
         
         # bind events
-        self.Bind(events.EVT_LABELS_NEW, self._on_new)
+        self.Bind(events.EVT_LABELS_TYPE, self._on_search)
+        self.Bind(events.EVT_LABELS_ADD, self._on_add)
         self.Bind(events.EVT_LABELS_APPLY, self._on_apply)
         
         # pack UI
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
         self.Sizer.Add(self._top_bar, 0, wx.EXPAND)
         self.Sizer.Add(self._list, 1, wx.EXPAND)
+    
+    
+    def _show_labels(self):
+        """Shows labels according to current search."""
+        
+        # get all labels
+        labels = self._labels[:]
+        
+        # apply search filter
+        if self._search:
+            
+            buff = []
+            
+            for label in labels:
+                if all(map(lambda x: x in label.title.lower(), self._search)):
+                    buff.append(label)
+            
+            labels = buff
+        
+        # show labels
+        self._list.SetLabels(labels)

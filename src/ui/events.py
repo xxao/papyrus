@@ -36,4 +36,6 @@ RepositoryOkEvent, EVT_REPOSITORY_OK = wx.lib.newevent.NewCommandEvent()
 
 # events from labels view
 LabelsNewEvent, EVT_LABELS_NEW = wx.lib.newevent.NewCommandEvent()
+LabelsTypeEvent, EVT_LABELS_TYPE = wx.lib.newevent.NewCommandEvent()
+LabelsAddEvent, EVT_LABELS_ADD = wx.lib.newevent.NewCommandEvent()
 LabelsApplyEvent, EVT_LABELS_APPLY = wx.lib.newevent.NewCommandEvent()
