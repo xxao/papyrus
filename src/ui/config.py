@@ -10,11 +10,14 @@ CONFIG_PATH = './papyrus.json'
 
 _PARAMS = dict(
     
+    # value, func, store
+    
     # path to the library DB to open at start
     library = ['', str, True],
     recent_days = [10, int, True],
     
-    # application size
+    # application layout
+    menu_bar_enabled = [False, bool, False],
     unlock_ui = [False, bool, False],
     app_maximized = [False, bool, True],
     app_width = [1500, int, True],

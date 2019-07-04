@@ -26,6 +26,7 @@ from .hotkeys import ACCELERATORS
 from . import events
 
 from .error_dlg import ErrorDlg
+from .menu_bar import MenuBar
 from .bottom_bar import BottomBar
 from .articles_view import ArticlesView, ArticlesEditDlg
 from .details_view import DetailsView
@@ -47,7 +48,7 @@ class MainFrame(wx.Frame):
         """Initializes main application frame."""
         
         # init frame
-        wx.Frame.__init__(self, parent, -1, "Papyrus", size=(800, 500), style=wx.DEFAULT_FRAME_STYLE|wx.NO_FULL_REPAINT_ON_RESIZE)
+        wx.Frame.__init__(self, parent, -1, "Papyrus", size=(800, 500), style=wx.DEFAULT_FRAME_STYLE | wx.NO_FULL_REPAINT_ON_RESIZE)
         
         # init error handler
         sys.excepthook = self._on_error
@@ -64,7 +65,12 @@ class MainFrame(wx.Frame):
         icons.AddIcon(images.APP_ICON_256)
         self.SetIcons(icons)
         
-        # init ui
+        # init menu bar
+        self._menu_bar = MenuBar()
+        if config.SETTINGS['menu_bar_enabled']:
+            self.SetMenuBar(self._menu_bar)
+        
+        # init main ui
         self._make_ui()
         
         # set size
@@ -138,6 +144,7 @@ class MainFrame(wx.Frame):
             
             try:
                 self._library = core.Library(libraries[0])
+                self._menu_bar.SetLibrary(self._library)
                 self._collections_view.SetLibrary(self._library)
                 self._articles_view.SetMasterQuery("0[TRASH]")
                 self._articles_view.SetLibrary(self._library)
@@ -191,7 +198,7 @@ class MainFrame(wx.Frame):
         """Handles new library create event."""
         
         # raise save dialog
-        wildcard =  "Papyrus library format|*.papyrus"
+        wildcard = "Papyrus library format|*.papyrus"
         dlg = wx.FileDialog(self, "New Papyrus Library", "", "library.papyrus", wildcard=wildcard, style=wx.FD_SAVE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -218,8 +225,8 @@ class MainFrame(wx.Frame):
         """Handles open library event."""
         
         # raise open dialog
-        wildcard =  "Papyrus library format|*.papyrus"
-        dlg = wx.FileDialog(self, "Open Papyrus Library", "", "", wildcard=wildcard, style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST)
+        wildcard = "Papyrus library format|*.papyrus"
+        dlg = wx.FileDialog(self, "Open Papyrus Library", "", "", wildcard=wildcard, style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             dlg.Destroy()
@@ -236,6 +243,9 @@ class MainFrame(wx.Frame):
         
         # get selected collection
         collection = self._collections_view.GetSelectedCollection()
+        
+        # update menu bar
+        self._menu_bar.SetCollection(collection)
         
         # check collection
         if collection is None:
@@ -593,6 +603,9 @@ class MainFrame(wx.Frame):
         
         # get selected articles
         articles = self._articles_view.GetSelectedArticles()
+
+        # update menu bar
+        self._menu_bar.SetArticles(articles)
         
         # none or multiple articles selected
         if len(articles) != 1:

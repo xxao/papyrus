@@ -123,42 +123,49 @@ class ArticlesView(wx.Panel):
         
         # init menu
         menu = wx.Menu()
+        
         menu.Append(ID_ARTICLES_OPEN_PDF, "Open PDF")
         menu.Append(ID_ARTICLES_OPEN_DOI, "Open Website")
         menu.Append(ID_ARTICLES_OPEN_PMID, "Open in PubMed")
         menu.Append(ID_ARTICLES_REVEAL_PDF, "Reveal PDF File")
-        menu.AppendSeparator()
         
+        menu.AppendSeparator()
         menu.Append(ID_ARTICLES_COPY_CITATION, "Copy Citation")
         menu.Append(ID_ARTICLES_COPY_SUMMARY, "Copy Summary")
         menu.Append(ID_ARTICLES_COPY_LINK, "Copy Link")
-        menu.AppendSeparator()
         
         # trashed articles
         if is_trash:
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_RESTORE, "Restore")
+            
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_DELETE, "Delete Permanently")
             menu.Append(ID_COLLECTIONS_EMPTY_TRASH, "Empty Trash")
         
         # standard article views
         else:
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_RATING, "Rating", self._make_rating_menu(articles))
             menu.Append(ID_ARTICLES_COLOUR, "Color", self._make_colour_menu(articles))
-            menu.Append(ID_ARTICLES_COLLECTIONS, "Collections", self._make_collections_menu(articles))
             menu.Append(ID_ARTICLES_LABELS, "Labels...")
-            menu.AppendSeparator()
             
+            menu.AppendSeparator()
+            menu.Append(ID_ARTICLES_COLLECTIONS, "Collections", self._make_collections_menu(articles))
+            
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_EDIT, "Edit...")
             menu.Append(ID_ARTICLES_ATTACH_PDF, "Attach PDF...")
+
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...")
             menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...")
-            menu.AppendSeparator()
             
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_NEW, "New Article...")
             menu.Append(ID_ARTICLES_IMPORT, "Import PDFs...")
-            menu.AppendSeparator()
             
+            menu.AppendSeparator()
             menu.Append(ID_ARTICLES_TRASH, "Move to Trash")
         
         # enable items
@@ -179,11 +186,11 @@ class ArticlesView(wx.Panel):
             menu.Enable(ID_ARTICLES_RATING, len(articles) != 0)
             menu.Enable(ID_ARTICLES_COLOUR, len(articles) != 0)
             menu.Enable(ID_ARTICLES_LABELS, len(articles) != 0)
+            menu.Enable(ID_ARTICLES_COLLECTIONS, len(articles) != 0)
             menu.Enable(ID_ARTICLES_EDIT, len(articles) == 1)
+            menu.Enable(ID_ARTICLES_ATTACH_PDF, len(articles) == 1)
             menu.Enable(ID_ARTICLES_MATCH, len(articles) == 1)
             menu.Enable(ID_ARTICLES_UPDATE, any(x.pmid for x in articles))
-            menu.Enable(ID_ARTICLES_ATTACH_PDF, len(articles) == 1)
-            menu.Enable(ID_ARTICLES_COLLECTIONS, len(articles) != 0)
         
         # show menu
         self.PopupMenu(menu)
@@ -250,12 +257,12 @@ class ArticlesView(wx.Panel):
         ratings = list(set(x.rating for x in articles))
         rating = ratings[0] if len(ratings) == 1 else None
         
-        menu.Check(ID_ARTICLES_RATING_0, rating==0)
-        menu.Check(ID_ARTICLES_RATING_1, rating==1)
-        menu.Check(ID_ARTICLES_RATING_2, rating==2)
-        menu.Check(ID_ARTICLES_RATING_3, rating==3)
-        menu.Check(ID_ARTICLES_RATING_4, rating==4)
-        menu.Check(ID_ARTICLES_RATING_5, rating==5)
+        menu.Check(ID_ARTICLES_RATING_0, rating == 0)
+        menu.Check(ID_ARTICLES_RATING_1, rating == 1)
+        menu.Check(ID_ARTICLES_RATING_2, rating == 2)
+        menu.Check(ID_ARTICLES_RATING_3, rating == 3)
+        menu.Check(ID_ARTICLES_RATING_4, rating == 4)
+        menu.Check(ID_ARTICLES_RATING_5, rating == 5)
         
         return menu
     
@@ -290,13 +297,13 @@ class ArticlesView(wx.Panel):
         colours = list(set(x.colour for x in articles))
         colour = colours[0] if len(colours) == 1 else False
         
-        menu.Check(ID_ARTICLES_COLOUR_GRAY, colour==None)
-        menu.Check(ID_ARTICLES_COLOUR_RED, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_RED))
-        menu.Check(ID_ARTICLES_COLOUR_ORANGE, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_ORANGE))
-        menu.Check(ID_ARTICLES_COLOUR_YELLOW, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_YELLOW))
-        menu.Check(ID_ARTICLES_COLOUR_GREEN, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_GREEN))
-        menu.Check(ID_ARTICLES_COLOUR_BLUE, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_BLUE))
-        menu.Check(ID_ARTICLES_COLOUR_PURPLE, colour==mwx.rgb_to_hex(mwx.COLOUR_BULLET_PURPLE))
+        menu.Check(ID_ARTICLES_COLOUR_GRAY, colour is None)
+        menu.Check(ID_ARTICLES_COLOUR_RED, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_RED))
+        menu.Check(ID_ARTICLES_COLOUR_ORANGE, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_ORANGE))
+        menu.Check(ID_ARTICLES_COLOUR_YELLOW, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_YELLOW))
+        menu.Check(ID_ARTICLES_COLOUR_GREEN, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_GREEN))
+        menu.Check(ID_ARTICLES_COLOUR_BLUE, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_BLUE))
+        menu.Check(ID_ARTICLES_COLOUR_PURPLE, colour == mwx.rgb_to_hex(mwx.COLOUR_BULLET_PURPLE))
         
         return menu
     
@@ -313,7 +320,7 @@ class ArticlesView(wx.Panel):
         
         # init menu
         menu = wx.Menu()
-        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "As New Collection...")
+        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "New from Selection...")
         
         if collections:
             menu.AppendSeparator()

@@ -4,6 +4,8 @@
 # import modules
 import wx
 
+ID_QUIT = wx.ID_EXIT
+
 ID_VIEW_COLLECTIONS = wx.NewIdRef()
 ID_VIEW_PDF = wx.NewIdRef()
 ID_VIEW_DETAILS = wx.NewIdRef()
@@ -23,6 +25,7 @@ ID_ARTICLES_IMPORT = wx.NewIdRef()
 ID_ARTICLES_EDIT = wx.NewIdRef()
 ID_ARTICLES_DELETE = wx.NewIdRef()
 ID_ARTICLES_TRASH = wx.NewIdRef()
+ID_ARTICLES_TRASH_MENU = wx.NewIdRef()
 ID_ARTICLES_RESTORE = wx.NewIdRef()
 ID_ARTICLES_LABELS = wx.NewIdRef()
 ID_ARTICLES_MATCH = wx.NewIdRef()
