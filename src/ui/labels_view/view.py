@@ -135,9 +135,11 @@ class LabelsView(wx.Dialog):
         if self._search:
             
             buff = []
+            words = self._search.split()
             
             for label in labels:
-                if all(map(lambda x: x in label.title.lower(), self._search)):
+                title = label.title.lower()
+                if all(map(lambda w: w in title, words)):
                     buff.append(label)
             
             labels = buff
