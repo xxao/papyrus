@@ -16,7 +16,7 @@ class ArticlesEditDlg(wx.Dialog):
         """Initializes article dialog."""
         
         # init dialog
-        wx.Dialog.__init__(self, parent, -1, title="Article", size=(400, -1), style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, parent, -1, title="Article", size=(400, -1), style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.Bind(wx.EVT_PAINT, self._on_paint)
         
         # init buffers
@@ -29,6 +29,7 @@ class ArticlesEditDlg(wx.Dialog):
         # display dialog
         self.Layout()
         self.Sizer.Fit(self)
+        self.SetMinSize(self.GetSize())
         self.Centre()
     
     
@@ -128,60 +129,75 @@ class ArticlesEditDlg(wx.Dialog):
     def _make_ui(self):
         """Makes dialog UI."""
         
-        # make items
-        title_label = wx.StaticText(self, -1, "Title:")
-        text = self._article.title if self._article.title else ""
-        self._title_value = wx.TextCtrl(self, -1, text, size=(400,55), style=wx.TE_MULTILINE)
+        # make notebook
+        notebook = wx.Notebook(self)
+        notebook.AddPage(self._make_info_page(notebook), "Info")
+        notebook.AddPage(self._make_abstract_page(notebook), "Abstract")
+        notebook.AddPage(self._make_notes_page(notebook), "Notes")
         
-        authors_label = wx.StaticText(self, -1, "Authors:")
-        text = ", ".join(x.longname for x in self._article.authors)
-        self._authors_value = wx.TextCtrl(self, -1, text, size=(400,55), style=wx.TE_MULTILINE)
-        self._authors_value.SetToolTip(wx.ToolTip("Lastname Firstname I, Lastname Firstname I"))
-        
-        journal_label = wx.StaticText(self, -1, "Journal:")
-        text = self._article.journal.abbreviation if self._article.journal else ""
-        choices = [x.abbreviation for x in self._journals]
-        choices.sort()
-        self._journal_combo = wx.ComboBox(self, -1, text, choices=choices, size=(400,-1), style=wx.CB_DROPDOWN)
-        
-        year_label = wx.StaticText(self, -1, "Year:")
-        text = str(self._article.year) if self._article.year else ""
-        self._year_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        volume_label = wx.StaticText(self, -1, "Volume:")
-        text = self._article.volume if self._article.volume else ""
-        self._volume_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        issue_label = wx.StaticText(self, -1, "Issue:")
-        text = self._article.issue if self._article.issue else ""
-        self._issue_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        pages_label = wx.StaticText(self, -1, "Pages:")
-        text = self._article.pages if self._article.pages else ""
-        self._pages_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        doi_label = wx.StaticText(self, -1, "DOI:")
-        text = self._article.doi if self._article.doi else ""
-        self._doi_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        pmid_label = wx.StaticText(self, -1, "PMID:")
-        text = self._article.pmid if self._article.pmid else ""
-        self._pmid_value = wx.TextCtrl(self, -1, text, size=(-1,-1))
-        
-        abstract_label = wx.StaticText(self, -1, "Abstract:")
-        text = self._article.abstract if self._article.abstract else ""
-        self._abstract_value = wx.TextCtrl(self, -1, text, size=(400,100), style=wx.TE_MULTILINE)
-        
-        notes_label = wx.StaticText(self, -1, "Notes:")
-        text = self._article.notes if self._article.notes else ""
-        self._notes_value = wx.TextCtrl(self, -1, text, size=(400,100), style=wx.TE_MULTILINE)
-        
+        # make buttons
         cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
         ok_butt = wx.Button(self, wx.ID_OK, "OK")
         
         # bind events
         cancel_butt.Bind(wx.EVT_BUTTON, self._on_cancel)
         ok_butt.Bind(wx.EVT_BUTTON, self._on_ok)
+        
+        # pack items
+        buttons = wx.BoxSizer(wx.HORIZONTAL)
+        buttons.Add(cancel_butt, 0, wx.RIGHT, mwx.PANEL_SPACE_MAIN)
+        buttons.Add(ok_butt, 0)
+        
+        self.Sizer = wx.BoxSizer(wx.VERTICAL)
+        self.Sizer.Add(notebook, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(buttons, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)
+    
+    
+    def _make_info_page(self, notebook):
+        """Makes info page."""
+        
+        # init page
+        page = wx.Panel(notebook)
+        
+        # make items
+        title_label = wx.StaticText(page, -1, "Title:")
+        text = self._article.title if self._article.title else ""
+        self._title_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
+        
+        authors_label = wx.StaticText(page, -1, "Authors:")
+        text = ", ".join(x.longname for x in self._article.authors)
+        self._authors_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
+        self._authors_value.SetToolTip(wx.ToolTip("Lastname Firstname I, Lastname Firstname I"))
+        
+        journal_label = wx.StaticText(page, -1, "Journal:")
+        text = self._article.journal.abbreviation if self._article.journal else ""
+        choices = [x.abbreviation for x in self._journals]
+        choices.sort()
+        self._journal_combo = wx.ComboBox(page, -1, text, choices=choices, size=(400,-1), style=wx.CB_DROPDOWN)
+        
+        year_label = wx.StaticText(page, -1, "Year:")
+        text = str(self._article.year) if self._article.year else ""
+        self._year_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
+        
+        volume_label = wx.StaticText(page, -1, "Volume:")
+        text = self._article.volume if self._article.volume else ""
+        self._volume_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
+        
+        issue_label = wx.StaticText(page, -1, "Issue:")
+        text = self._article.issue if self._article.issue else ""
+        self._issue_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
+        
+        pages_label = wx.StaticText(page, -1, "Pages:")
+        text = self._article.pages if self._article.pages else ""
+        self._pages_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
+        
+        doi_label = wx.StaticText(page, -1, "DOI:")
+        text = self._article.doi if self._article.doi else ""
+        self._doi_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
+        
+        pmid_label = wx.StaticText(page, -1, "PMID:")
+        text = self._article.pmid if self._article.pmid else ""
+        self._pmid_value = wx.TextCtrl(page, -1, text, size=(-1,-1))
         
         # pack items
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
@@ -213,26 +229,52 @@ class ArticlesEditDlg(wx.Dialog):
         grid.Add(pmid_label, (8,2), (1,2), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self._pmid_value, (9,2), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
         
-        grid.Add(abstract_label, (10,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._abstract_value, (11,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
-        
-        grid.Add(notes_label, (12,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._notes_value, (13,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
-        
         grid.AddGrowableCol(0)
         grid.AddGrowableCol(1)
         grid.AddGrowableCol(2)
         grid.AddGrowableCol(3)
-        grid.AddGrowableRow(11)
-        grid.AddGrowableRow(13)
+        grid.AddGrowableRow(1)
+        grid.AddGrowableRow(3)
         
-        buttons = wx.BoxSizer(wx.HORIZONTAL)
-        buttons.Add(cancel_butt, 0, wx.RIGHT, mwx.PANEL_SPACE_MAIN)
-        buttons.Add(ok_butt, 0)
+        # pack items
+        page.Sizer = wx.BoxSizer(wx.VERTICAL)
+        page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
-        self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(grid, 1, wx.ALL|wx.EXPAND, mwx.PANEL_SPACE_MAIN)
-        self.Sizer.Add(buttons, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)
+        return page
+    
+    
+    def _make_abstract_page(self, notebook):
+        """Makes abstract page."""
+        
+        # init page
+        page = wx.Panel(notebook)
+        
+        # init items
+        text = self._article.abstract if self._article.abstract else ""
+        self._abstract_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
+        
+        # pack items
+        page.Sizer = wx.BoxSizer(wx.VERTICAL)
+        page.Sizer.Add(self._abstract_value, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        
+        return page
+    
+    
+    def _make_notes_page(self, notebook):
+        """Makes notes page."""
+        
+        # init page
+        page = wx.Panel(notebook)
+        
+        # init items
+        text = self._article.notes if self._article.notes else ""
+        self._notes_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
+        
+        # pack items
+        page.Sizer = wx.BoxSizer(wx.VERTICAL)
+        page.Sizer.Add(self._notes_value, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        
+        return page
     
     
     def _get_journal(self, value):

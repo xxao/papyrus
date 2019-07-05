@@ -155,7 +155,7 @@ class ArticlesView(wx.Panel):
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_RATING, "Rating", self._make_rating_menu(articles))
             menu.Append(ID_ARTICLES_COLOUR, "Color", self._make_colour_menu(articles))
-            menu.Append(ID_ARTICLES_LABELS, "Labels...")
+            menu.Append(ID_ARTICLES_LABELS, "Labels...\t"+HK_ARTICLES_LABELS)
             
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_COLLECTIONS, "Collections", self._make_collections_menu(articles))
