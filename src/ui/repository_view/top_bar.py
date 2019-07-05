@@ -110,10 +110,13 @@ class RepositoryTopBar(wx.Panel):
         self._search_butt = wx.Button(self, label="Search", size=(95, -1))
         
         self._more_butt = wx.Button(self, label=">>", size=(40, -1))
+        self._more_butt.SetToolTipString("Retrieve next batch of articles")
         self._more_butt.Enable(False)
         
         label = "Apply" if self._mode == 'match' else "Import"
+        tooltip = "Annotate article by selected record" if self._mode == 'match' else "Import checked articles to library"
         self._ok_butt = wx.Button(self, label=label)
+        self._ok_butt.SetToolTipString(tooltip)
         self._ok_butt.Enable(False)
         
         # bind events

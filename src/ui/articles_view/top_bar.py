@@ -79,6 +79,7 @@ class ArticlesTopBar(wx.Panel):
         self._query_search.ShowCancelButton(True)
         
         self._pubmed_butt = wx.Button(self, label="PubMed")
+        self._pubmed_butt.SetToolTipString("Open PubMed search")
         
         # bind events
         self._query_search.Bind(wx.EVT_TEXT, self._on_query_changed)

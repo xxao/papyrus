@@ -89,6 +89,7 @@ class CollectionsEditDlg(wx.Dialog):
         
         self._export_check = wx.CheckBox(self, -1, "Enable automatic export to text file")
         self._export_check.SetValue(self._collection.export)
+        self._export_check.SetToolTipString("Creates a text export with citations when application quits")
         
         cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
         ok_butt = wx.Button(self, wx.ID_OK, "OK")

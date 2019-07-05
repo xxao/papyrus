@@ -20,7 +20,7 @@ class LabelsView(wx.Dialog):
         """Initializes labels view panel."""
         
         # init panel
-        wx.Dialog.__init__(self, parent, -1, size=(300, 350), title="Labels", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, -1, size=(250, 380), title="Labels", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         
         # init buffers
         self._articles = articles

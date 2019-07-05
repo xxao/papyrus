@@ -50,7 +50,7 @@ class LabelsList(wx.Panel):
         # add columns
         self._list_ctrl.AppendTextColumn("Expander", 0, width=0, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
         self._list_ctrl.AppendToggleColumn("", 1, width=30, mode=wxdv.DATAVIEW_CELL_ACTIVATABLE, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Label", 2, width=235, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
+        self._list_ctrl.AppendTextColumn("Label", 2, width=185, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
         
         # hide expander column
         self._list_ctrl.Columns[0].SetHidden(True)

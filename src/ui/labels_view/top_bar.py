@@ -76,22 +76,19 @@ class LabelsTopBar(wx.Panel):
         
         # make items
         self._label_value = wx.TextCtrl(self, -1, "", style=wx.TE_PROCESS_ENTER)
-        self._add_butt = wx.Button(self, label="Add", size=(60,-1))
-        self._apply_butt = wx.Button(self, label="Apply", size=(60,-1))
+        self._label_value.SetToolTipString("Type and hit enter to add new")
         
-        # set state
-        self._add_butt.Disable()
+        self._apply_butt = wx.Button(self, label="Apply", size=(60,-1))
+        self._apply_butt.SetToolTipString("Apply to selected articles")
         
         # bind events
         self._label_value.Bind(wx.EVT_TEXT, self._on_type)
         self._label_value.Bind(wx.EVT_TEXT_ENTER, self._on_add)
-        self._add_butt.Bind(wx.EVT_BUTTON, self._on_add)
         self._apply_butt.Bind(wx.EVT_BUTTON, self._on_apply)
         
         # add to sizer
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(self._label_value, 1, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 10)
-        sizer.Add(self._add_butt, 0, wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(self._label_value, 1, wx.ALIGN_CENTER_VERTICAL)
         sizer.Add(self._apply_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 10)
         self.Sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.Sizer.Add(sizer, 1, wx.EXPAND | wx.ALL, 10)
