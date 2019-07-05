@@ -123,11 +123,11 @@ class MenuBar(wx.MenuBar):
         
         # add items
         menu.Append(ID_ARTICLES_NEW, "New Article...\t"+HK_ARTICLES_NEW)
-        menu.Append(ID_ARTICLES_IMPORT, "Import Articles...\t"+HK_ARTICLES_IMPORT)
-        
-        menu.AppendSeparator()
         menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
+        
         menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
+        menu.AppendSeparator()
+        menu.Append(ID_ARTICLES_IMPORT, "Import Articles...\t"+HK_ARTICLES_IMPORT)
         
         menu.AppendSeparator()
         menu.Append(ID_QUIT, "Quit Papyrus\t"+HK_QUIT)
