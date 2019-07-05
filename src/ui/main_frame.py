@@ -642,6 +642,13 @@ class MainFrame(wx.Frame):
             self._on_articles_open_pmid()
     
     
+    def _on_articles_search(self, evt=None):
+        """Set focus to search field."""
+        
+        # set focus
+        self._articles_view.SetFocusToQuery()
+    
+    
     def _on_articles_open_pdf(self, evt=None):
         """Opens article PDF in default viewer."""
         
@@ -1528,7 +1535,8 @@ class MainFrame(wx.Frame):
         # menu events
         self.Bind(wx.EVT_MENU, self._on_library_new, id=ID_LIBRARY_NEW)
         self.Bind(wx.EVT_MENU, self._on_library_open, id=ID_LIBRARY_OPEN)
-        
+
+        self.Bind(wx.EVT_MENU, self._on_articles_search, id=ID_ARTICLES_SEARCH)
         self.Bind(wx.EVT_MENU, self._on_articles_open_pdf, id=ID_ARTICLES_OPEN_PDF)
         self.Bind(wx.EVT_MENU, self._on_articles_open_doi, id=ID_ARTICLES_OPEN_DOI)
         self.Bind(wx.EVT_MENU, self._on_articles_open_pmid, id=ID_ARTICLES_OPEN_PMID)

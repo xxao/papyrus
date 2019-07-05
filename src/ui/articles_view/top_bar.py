@@ -24,6 +24,12 @@ class ArticlesTopBar(wx.Panel):
         self._make_ui()
     
     
+    def SetFocusToQuery(self):
+        """Sets focus on search query field."""
+        
+        self._query_search.SetFocus()
+    
+    
     def GetQuery(self):
         """Gets current query value."""
         

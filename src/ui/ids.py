@@ -13,6 +13,7 @@ ID_VIEW_DETAILS = wx.NewIdRef()
 ID_LIBRARY_NEW = wx.NewIdRef()
 ID_LIBRARY_OPEN = wx.NewIdRef()
 
+ID_ARTICLES_SEARCH = wx.NewIdRef()
 ID_ARTICLES_OPEN_PDF = wx.NewIdRef()
 ID_ARTICLES_OPEN_DOI = wx.NewIdRef()
 ID_ARTICLES_OPEN_PMID = wx.NewIdRef()

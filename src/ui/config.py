@@ -17,8 +17,8 @@ _PARAMS = dict(
     recent_days = [10, int, True],
     
     # application layout
-    menu_bar_enabled = [False, bool, False],
     unlock_ui = [False, bool, False],
+    menu_bar_enabled = [True, bool, True],
     app_maximized = [False, bool, True],
     app_width = [1500, int, True],
     app_height = [800, int, True],

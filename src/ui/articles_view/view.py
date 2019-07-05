@@ -9,6 +9,7 @@ from .. import mwx
 from .. import images
 from .. import events
 from .. ids import *
+from .. hotkeys import *
 
 from .list_ctrl import ArticlesList
 from .top_bar import ArticlesTopBar
@@ -73,6 +74,12 @@ class ArticlesView(wx.Panel):
         self._list.SetSelectedArticles(articles)
     
     
+    def SetFocusToQuery(self):
+        """Sets focus on search query field."""
+        
+        self._top_bar.SetFocusToQuery()
+    
+    
     def ShowAllArticles(self):
         """Clears query and shows all articles in library."""
         
@@ -106,8 +113,8 @@ class ArticlesView(wx.Panel):
         if self._library is None:
             
             menu = wx.Menu()
-            menu.Append(ID_LIBRARY_NEW, "New Library...")
-            menu.Append(ID_LIBRARY_OPEN, "Open Library...")
+            menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
+            menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
             
             self.PopupMenu(menu)
             menu.Destroy()
@@ -124,20 +131,20 @@ class ArticlesView(wx.Panel):
         # init menu
         menu = wx.Menu()
         
-        menu.Append(ID_ARTICLES_OPEN_PDF, "Open PDF")
-        menu.Append(ID_ARTICLES_OPEN_DOI, "Open Website")
-        menu.Append(ID_ARTICLES_OPEN_PMID, "Open in PubMed")
-        menu.Append(ID_ARTICLES_REVEAL_PDF, "Reveal PDF File")
+        menu.Append(ID_ARTICLES_OPEN_PDF, "Open PDF\t"+HK_ARTICLES_OPEN_PDF)
+        menu.Append(ID_ARTICLES_OPEN_DOI, "Open Website\t"+HK_ARTICLES_OPEN_DOI)
+        menu.Append(ID_ARTICLES_OPEN_PMID, "Open in PubMed\t"+HK_ARTICLES_OPEN_PMID)
+        menu.Append(ID_ARTICLES_REVEAL_PDF, "Reveal PDF File\t"+HK_ARTICLES_REVEAL_PDF)
         
         menu.AppendSeparator()
-        menu.Append(ID_ARTICLES_COPY_CITATION, "Copy Citation")
-        menu.Append(ID_ARTICLES_COPY_SUMMARY, "Copy Summary")
-        menu.Append(ID_ARTICLES_COPY_LINK, "Copy Link")
+        menu.Append(ID_ARTICLES_COPY_CITATION, "Copy Citation\t"+HK_ARTICLES_COPY_CITATION)
+        menu.Append(ID_ARTICLES_COPY_SUMMARY, "Copy Summary\t"+HK_ARTICLES_COPY_SUMMARY)
+        menu.Append(ID_ARTICLES_COPY_LINK, "Copy Link\t"+HK_ARTICLES_COPY_LINK)
         
         # trashed articles
         if is_trash:
             menu.AppendSeparator()
-            menu.Append(ID_ARTICLES_RESTORE, "Restore")
+            menu.Append(ID_ARTICLES_RESTORE, "Restore\t"+HK_ARTICLES_RESTORE)
             
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_DELETE, "Delete Permanently")
@@ -154,16 +161,12 @@ class ArticlesView(wx.Panel):
             menu.Append(ID_ARTICLES_COLLECTIONS, "Collections", self._make_collections_menu(articles))
             
             menu.AppendSeparator()
-            menu.Append(ID_ARTICLES_EDIT, "Edit...")
-            menu.Append(ID_ARTICLES_ATTACH_PDF, "Attach PDF...")
+            menu.Append(ID_ARTICLES_EDIT, "Edit...\t"+HK_ARTICLES_EDIT)
+            menu.Append(ID_ARTICLES_ATTACH_PDF, "Attach PDF...\t"+HK_ARTICLES_ATTACH_PDF)
 
             menu.AppendSeparator()
-            menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...")
-            menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...")
-            
-            menu.AppendSeparator()
-            menu.Append(ID_ARTICLES_NEW, "New Article...")
-            menu.Append(ID_ARTICLES_IMPORT, "Import PDFs...")
+            menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...\t"+HK_ARTICLES_MATCH)
+            menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...\t"+HK_ARTICLES_UPDATE)
             
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_TRASH, "Move to Trash")
@@ -335,7 +338,7 @@ class ArticlesView(wx.Panel):
             status = all(x.dbid in coll_articles_ids for x in articles)
             
             # add item
-            coll_id = wx.NewId()
+            coll_id = wx.NewIdRef()
             item = menu.Append(coll_id, collection.title, kind=wx.ITEM_CHECK)
             item.Check(status)
             

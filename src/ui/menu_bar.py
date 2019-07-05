@@ -122,15 +122,15 @@ class MenuBar(wx.MenuBar):
         menu = wx.Menu()
         
         # add items
-        menu.Append(ID_ARTICLES_NEW, "New Article...")
-        menu.Append(ID_ARTICLES_IMPORT, "Import Articles...")
+        menu.Append(ID_ARTICLES_NEW, "New Article...\t"+HK_ARTICLES_NEW)
+        menu.Append(ID_ARTICLES_IMPORT, "Import Articles...\t"+HK_ARTICLES_IMPORT)
         
         menu.AppendSeparator()
-        menu.Append(ID_LIBRARY_NEW, "New Library...")
-        menu.Append(ID_LIBRARY_OPEN, "Open Library...")
+        menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
+        menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
         
         menu.AppendSeparator()
-        menu.Append(ID_QUIT, "Quit Papyrus")
+        menu.Append(ID_QUIT, "Quit Papyrus\t"+HK_QUIT)
         
         # add to menu bar
         self.Append(menu, '&File')
@@ -143,7 +143,7 @@ class MenuBar(wx.MenuBar):
         menu = wx.Menu()
         
         # add items
-        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "New from Selection...")
+        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "New from Selection...\t"+HK_COLLECTIONS_NEW_FROM_SELECTION)
         
         menu.AppendSeparator()
         menu.Append(ID_COLLECTIONS_NEW_MANUAL, "New Collection...")
@@ -172,34 +172,34 @@ class MenuBar(wx.MenuBar):
         menu = wx.Menu()
         
         # add items
-        menu.Append(ID_ARTICLES_OPEN_PDF, "Open PDF File")
-        menu.Append(ID_ARTICLES_OPEN_DOI, "Open Website")
-        menu.Append(ID_ARTICLES_OPEN_PMID, "Open in PubMed")
-        menu.Append(ID_ARTICLES_REVEAL_PDF, "Reveal PDF File")
+        menu.Append(ID_ARTICLES_OPEN_PDF, "Open PDF File\t"+HK_ARTICLES_OPEN_PDF)
+        menu.Append(ID_ARTICLES_OPEN_DOI, "Open Website\t"+HK_ARTICLES_OPEN_DOI)
+        menu.Append(ID_ARTICLES_OPEN_PMID, "Open in PubMed\t"+HK_ARTICLES_OPEN_PMID)
+        menu.Append(ID_ARTICLES_REVEAL_PDF, "Reveal PDF File\t"+HK_ARTICLES_REVEAL_PDF)
         
         menu.AppendSeparator()
-        menu.Append(ID_ARTICLES_COPY_CITATION, "Copy Citation")
-        menu.Append(ID_ARTICLES_COPY_SUMMARY, "Copy Summary")
-        menu.Append(ID_ARTICLES_COPY_LINK, "Copy Link")
+        menu.Append(ID_ARTICLES_COPY_CITATION, "Copy Citation\t"+HK_ARTICLES_COPY_CITATION)
+        menu.Append(ID_ARTICLES_COPY_SUMMARY, "Copy Summary\t"+HK_ARTICLES_COPY_SUMMARY)
+        menu.Append(ID_ARTICLES_COPY_LINK, "Copy Link\t"+HK_ARTICLES_COPY_LINK)
         
         menu.AppendSeparator()
         menu.Append(ID_ARTICLES_RATING, "Rating", self._make_rating_menu())
         menu.Append(ID_ARTICLES_COLOUR, "Color", self._make_colour_menu())
-        menu.Append(ID_ARTICLES_LABELS, "Labels...")
+        menu.Append(ID_ARTICLES_LABELS, "Labels...\t"+HK_ARTICLES_LABELS)
         
         menu.AppendSeparator()
-        menu.Append(ID_ARTICLES_EDIT, "Edit...")
-        menu.Append(ID_ARTICLES_ATTACH_PDF, "Attach PDF...")
+        menu.Append(ID_ARTICLES_EDIT, "Edit...\t"+HK_ARTICLES_EDIT)
+        menu.Append(ID_ARTICLES_ATTACH_PDF, "Attach PDF...\t"+HK_ARTICLES_ATTACH_PDF)
         
         menu.AppendSeparator()
-        menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...")
-        menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...")
+        menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...\t"+HK_ARTICLES_MATCH)
+        menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...\t"+HK_ARTICLES_UPDATE)
         
         trash_menu = wx.Menu()
-        trash_menu.Append(ID_ARTICLES_TRASH, "Move to Trash")
+        trash_menu.Append(ID_ARTICLES_TRASH, "Move to Trash\t"+HK_ARTICLES_TRASH)
         trash_menu.Append(ID_ARTICLES_DELETE, "Delete Permanently")
         trash_menu.AppendSeparator()
-        trash_menu.Append(ID_ARTICLES_RESTORE, "Restore from Trash")
+        trash_menu.Append(ID_ARTICLES_RESTORE, "Restore from Trash\t"+HK_ARTICLES_RESTORE)
         
         menu.AppendSeparator()
         menu.Append(ID_ARTICLES_TRASH_MENU, "Trash", trash_menu)
