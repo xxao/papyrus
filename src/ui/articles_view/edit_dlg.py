@@ -176,8 +176,8 @@ class ArticlesEditDlg(wx.Dialog):
         text = self._article.notes if self._article.notes else ""
         self._notes_value = wx.TextCtrl(self, -1, text, size=(400,100), style=wx.TE_MULTILINE)
         
-        cancel_butt = wx.Button(self, -1, "Cancel")
-        ok_butt = wx.Button(self, -1, "OK")
+        cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
+        ok_butt = wx.Button(self, wx.ID_OK, "OK")
         
         # bind events
         cancel_butt.Bind(wx.EVT_BUTTON, self._on_cancel)

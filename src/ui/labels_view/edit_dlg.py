@@ -78,8 +78,8 @@ class LabelsEditDlg(wx.Dialog):
         text = self._label.title if self._label.title else ""
         self._title_value = wx.TextCtrl(self, -1, text, style=wx.TE_PROCESS_ENTER)
         
-        cancel_butt = wx.Button(self, -1, "Cancel")
-        ok_butt = wx.Button(self, -1, "OK")
+        cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
+        ok_butt = wx.Button(self, wx.ID_OK, "OK")
         
         # bind events
         self._title_value.Bind(wx.EVT_TEXT_ENTER, self._on_ok)

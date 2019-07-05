@@ -90,8 +90,8 @@ class CollectionsEditDlg(wx.Dialog):
         self._export_check = wx.CheckBox(self, -1, "Enable automatic export to text file")
         self._export_check.SetValue(self._collection.export)
         
-        cancel_butt = wx.Button(self, -1, "Cancel")
-        ok_butt = wx.Button(self, -1, "OK")
+        cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
+        ok_butt = wx.Button(self, wx.ID_OK, "OK")
         
         # disable query for manual collections
         if not self._is_smart:
