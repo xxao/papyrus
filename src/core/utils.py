@@ -139,12 +139,28 @@ def move_cover_page(path, query, delete=False):
         doc.select(pages)
         doc.save(out_path)
         doc.close()
-        os.remove(in_path)
-        time.sleep(0.5)
-        os.rename(out_path, in_path)
-    
     except IOError:
         pass
+    
+    # remove old PDF
+    try:
+        os.remove(in_path)
+    except IOError:
+        try:
+            time.sleep(1)
+            os.remove(in_path)
+        except IOError:
+            pass
+    
+    # rename new PDF
+    try:
+        os.rename(out_path, in_path)
+    except IOError:
+        try:
+            time.sleep(1)
+            os.rename(out_path, in_path)
+        except IOError:
+            pass
 
 
 def search_pdf(path, query):
