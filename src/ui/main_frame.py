@@ -1533,6 +1533,8 @@ class MainFrame(wx.Frame):
         self.Bind(events.EVT_DETAILS_NAVIGATING, self._on_details_navigating)
         
         # menu events
+        self.Bind(wx.EVT_MENU, self.OnClose, id=ID_QUIT)
+        
         self.Bind(wx.EVT_MENU, self._on_library_new, id=ID_LIBRARY_NEW)
         self.Bind(wx.EVT_MENU, self._on_library_open, id=ID_LIBRARY_OPEN)
 
