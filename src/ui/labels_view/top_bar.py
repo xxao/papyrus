@@ -49,10 +49,6 @@ class LabelsTopBar(wx.Panel):
     def _on_type(self, evt=None):
         """Handles type label event."""
         
-        # enable/disable add button
-        self._add_butt.Enable(bool(self.GetLabelValue()))
-        
-        # post event
         event = events.LabelsTypeEvent(self.GetId())
         wx.PostEvent(self, event)
     
