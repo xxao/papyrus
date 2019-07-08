@@ -99,7 +99,7 @@ def rating(value, radius, space, outline, fill, bgr):
     return bitmap
 
 
-def bar(width, height, outline, fill):
+def gauge(width, height, value, outline, fill, bgr):
     """Draws colour bar icon for specific value."""
     
     # init drawing
@@ -108,9 +108,21 @@ def bar(width, height, outline, fill):
     mdc.SelectObject(bitmap)
     dc = wx.GCDC(mdc) if wx.Platform != "__WXMSW__" else mdc
     
-    # draw bar
-    dc.SetPen(outline)
+    # set pen
+    dc.SetPen(wx.TRANSPARENT_PEN)
+    
+    # draw background
+    if bgr is not None:
+        dc.SetBrush(bgr)
+        dc.DrawRectangle(0, 0, width, height)
+    
+    # draw value
     dc.SetBrush(fill)
+    dc.DrawRectangle(0, 0, width*value, height)
+    
+    # draw outline
+    dc.SetPen(outline)
+    dc.SetBrush(wx.TRANSPARENT_BRUSH)
     dc.DrawRectangle(0, 0, width, height)
     
     # release bitmap
