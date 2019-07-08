@@ -9,6 +9,7 @@ from .entity import Entity
 from .journal import Journal
 from .author import Author
 from .label import Label
+from .collection import Collection
 
 
 # define constants
@@ -65,6 +66,7 @@ class Article(Entity):
         self._notes = None
         self._authors = []
         self._labels = []
+        self._collections = []
         
         self._has_pdf = False
         self._colour = None
@@ -350,6 +352,26 @@ class Article(Entity):
                     raise TypeError(message)
         
         self._labels = value if value else []
+    
+    
+    @property
+    def collections(self):
+        """Gets connected collections."""
+        
+        return self._collections
+    
+    
+    @collections.setter
+    def collections(self, value):
+        """Sets connected collections."""
+        
+        if value is not None:
+            for item in value:
+                if not isinstance(item, Collection):
+                    message = "Collection must be of type Collection! --> '%s'" % type(item)
+                    raise TypeError(message)
+        
+        self._collections = value if value else []
     
     
     @property

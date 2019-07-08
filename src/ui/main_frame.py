@@ -1369,6 +1369,13 @@ class MainFrame(wx.Frame):
             self._articles_view.SetQuery(query)
             self._articles_view.ShowArticles()
         
+        # show articles by collection (in library)
+        elif parameter == 'collectionid':
+            query = "%s[COLLECTIONID]" % value
+            self._articles_view.SetMasterQuery(None)
+            self._articles_view.SetQuery(query)
+            self._articles_view.ShowArticles()
+        
         # set article rating
         elif parameter == 'rating':
             if value in "012345":

@@ -173,6 +173,7 @@ class Library(object):
                 article.journal = self._get_journal(data['journal'])
                 article.authors = self._get_authors(data['id'])
                 article.labels = self._get_labels(data['id'])
+                article.collections = self._get_collections(data['id'])
                 article.library_path = self._library_path
                 items.append(article)
         
@@ -1275,6 +1276,7 @@ class Library(object):
         article.journal = self._get_journal(data['journal'])
         article.authors = self._get_authors(data['id'])
         article.labels = self._get_labels(data['id'])
+        article.collections = self._get_collections(data['id'])
         article.library_path = self._library_path
         
         return article
@@ -1326,6 +1328,24 @@ class Library(object):
             labels.append(Label.from_db(data))
         
         return labels
+    
+    
+    def _get_collections(self, article_id):
+        """Gets manual collections by article id."""
+        
+        collections = []
+        
+        query = """SELECT * FROM articles_collections
+                    LEFT JOIN collections ON articles_collections.collection = collections.id
+                    WHERE articles_collections.article = ?
+                    ORDER BY collections.title"""
+        
+        self._db.cursor.execute(query, (article_id,))
+        
+        for data in self._db.cursor.fetchall():
+            collections.append(Collection.from_db(data))
+        
+        return collections
     
     
     def _generate_article_key(self):

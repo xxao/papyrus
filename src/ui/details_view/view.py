@@ -197,6 +197,12 @@ class DetailsView(wx.Panel):
             labels.append('<a href="papyrus:?labelid=%s" title="Show articles in library">%s</a>' % (label.dbid, label.title))
         html += '<p id="labels"><strong>LABELS:</strong> %s</p>' % ", ".join(labels) if labels else ""
         
+        # add collections
+        collections = []
+        for collection in self._article.collections:
+            collections.append('<a href="papyrus:?collectionid=%s" title="Show articles in library">%s</a>' % (collection.dbid, collection.title))
+        html += '<p id="labels"><strong>COLLECTIONS:</strong> %s</p>' % ", ".join(collections) if collections else ""
+        
         # add notes
         notes = self._article.notes or ""
         notes = notes.replace("\n\n", "<br /><br />")

@@ -317,7 +317,7 @@ class ArticlesView(wx.Panel):
         # clear IDs buffer
         self._collection_ids = {}
         
-        # get collections
+        # get available collections
         collections = self._library.search(core.Query("", core.Collection.NAME))
         collections = [x for x in collections if not x.query]
         
