@@ -1444,7 +1444,7 @@ class MainFrame(wx.Frame):
         """Shows library statistics view."""
         
         dlg = StatsView(self, self._library)
-        response = dlg.ShowModal()
+        dlg.ShowModal()
         dlg.Destroy()
     
     
