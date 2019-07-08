@@ -26,14 +26,17 @@ class StatsView(wx.Dialog):
         # make UI
         self._make_ui()
         
-        # load data
-        self._load_data()
-        
         # show frame
         self.Layout()
         self.Centre(wx.BOTH)
         self.Show(True)
         self.SetMinSize(self.GetSize())
+        wx.Yield()
+        
+        # load data
+        self._load_data()
+        self.Sizer.Hide(1)
+        self.Layout()
     
     
     def _make_ui(self):
@@ -82,9 +85,13 @@ class StatsView(wx.Dialog):
         sizer.Add(self._imported_list, 1, wx.ALL | wx.EXPAND)
         imported_page.SetSizer(sizer)
         
+        # make status
+        status = wx.StaticText(self, -1, "Analyzing library...")
+        
         # pack all
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(notebook, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        sizer.Add(status, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
         self.SetSizer(sizer)
     
     
