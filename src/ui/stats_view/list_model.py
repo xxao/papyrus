@@ -21,7 +21,8 @@ class StatsListModel(wxdv.DataViewIndexListModel):
             'expander',
             'label',
             'bar',
-            'count']
+            'count',
+            'perc']
         
         wxdv.DataViewIndexListModel.__init__(self, len(self._data))
     
@@ -61,6 +62,9 @@ class StatsListModel(wxdv.DataViewIndexListModel):
         
         if name == "count":
             return str(value)
+        
+        if name == "perc":
+            return "%.0f" % (100*value)
     
     
     def GetItemValue(self, item, col):
@@ -81,6 +85,9 @@ class StatsListModel(wxdv.DataViewIndexListModel):
         
         if name == "count":
             return item[1]
+        
+        if name == "perc":
+            return item[2]
     
     
     def GetColumnCount(self):
@@ -129,7 +136,7 @@ class StatsListModel(wxdv.DataViewIndexListModel):
     def _make_bar(self, value):
         """Gets bar for given value."""
         
-        width = 355 * value / max(x[1] for x in self._data)
+        width = 305 * value / max(x[1] for x in self._data)
         
         img = images.bar(
             width = width,

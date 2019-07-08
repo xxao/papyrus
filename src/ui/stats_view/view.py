@@ -107,12 +107,18 @@ class StatsView(wx.Dialog):
             self._imported_list.SetItems([])
             return
         
+        # load articles
+        query = core.Query("", core.Article.NAME)
+        articles = self._library.search(query)
+        total = len(articles)
+        
         # update authors
         items = []
         query = core.Query("", core.Author.NAME)
         data = self._library.search(query)
         for item in data:
-            items.append((item.longname, self._library.count(item)))
+            count = self._library.count(item)
+            items.append((item.longname, count, count/total))
         
         self._authors_list.SetItems(items)
         
@@ -121,7 +127,8 @@ class StatsView(wx.Dialog):
         query = core.Query("", core.Journal.NAME)
         data = self._library.search(query)
         for item in data:
-            items.append((item.abbreviation, self._library.count(item)))
+            count = self._library.count(item)
+            items.append((item.abbreviation, count, count/total))
         
         self._journals_list.SetItems(items)
         
@@ -130,13 +137,10 @@ class StatsView(wx.Dialog):
         query = core.Query("", core.Label.NAME)
         data = self._library.search(query)
         for item in data:
-            items.append((item.title, self._library.count(item)))
+            count = self._library.count(item)
+            items.append((item.title, count, count/total))
         
         self._labels_list.SetItems(items)
-        
-        # load articles
-        query = core.Query("", core.Article.NAME)
-        articles = self._library.search(query)
         
         # update years
         published = {}
@@ -154,5 +158,5 @@ class StatsView(wx.Dialog):
                 year = datetime.datetime.utcfromtimestamp(item.imported).strftime('%Y')
                 imported[year] = 1 + imported.get(year, 0)
         
-        self._published_list.SetItems(published.items())
-        self._imported_list.SetItems(imported.items())
+        self._published_list.SetItems([(k, v, v/total) for k,v in published.items()])
+        self._imported_list.SetItems([(k, v, v/total) for k,v in imported.items()])

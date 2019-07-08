@@ -54,8 +54,9 @@ class StatsList(wx.Panel):
         # add columns
         self._list_ctrl.AppendTextColumn("Expander", 0, width=0, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
         self._list_ctrl.AppendTextColumn(self._label, 1, width=170, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendBitmapColumn("Bar", 2, width=365, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendTextColumn("Count", 3, width=60, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_RIGHT)
+        self._list_ctrl.AppendBitmapColumn("Bar", 2, width=315, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
+        self._list_ctrl.AppendTextColumn("Articles", 3, width=60, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_RIGHT)
+        self._list_ctrl.AppendTextColumn("%", 4, width=50, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_RIGHT)
         
         # hide some columns
         self._list_ctrl.Columns[0].SetHidden(True)
