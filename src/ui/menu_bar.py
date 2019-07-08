@@ -278,6 +278,8 @@ class MenuBar(wx.MenuBar):
         menu.Append(ID_VIEW_COLLECTIONS, "Show Collections\t"+HK_VIEW_COLLECTIONS, kind=wx.ITEM_CHECK)
         menu.Append(ID_VIEW_PDF, "Show PDF Preview\t"+HK_VIEW_PDF, kind=wx.ITEM_CHECK)
         menu.Append(ID_VIEW_DETAILS, "Show Article Details\t"+HK_VIEW_DETAILS, kind=wx.ITEM_CHECK)
+        menu.AppendSeparator()
+        menu.Append(ID_VIEW_STATS, "Show Statistics\t"+HK_VIEW_STATS)
         
         # add to menu bar
         self.Append(menu, '&Window')

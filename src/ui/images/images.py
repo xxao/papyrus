@@ -97,3 +97,27 @@ def rating(value, radius, space, outline, fill, bgr):
         bitmap.SetMaskColour(wx.BLACK)
     
     return bitmap
+
+
+def bar(width, height, outline, fill):
+    """Draws colour bar icon for specific value."""
+    
+    # init drawing
+    bitmap = wx.Bitmap(width, height)
+    mdc = wx.MemoryDC()
+    mdc.SelectObject(bitmap)
+    dc = wx.GCDC(mdc) if wx.Platform != "__WXMSW__" else mdc
+    
+    # draw bar
+    dc.SetPen(outline)
+    dc.SetBrush(fill)
+    dc.DrawRectangle(0, 0, width, height)
+    
+    # release bitmap
+    mdc.SelectObject(wx.NullBitmap)
+    
+    # set mask
+    if wx.Platform == "__WXMSW__":
+        bitmap.SetMaskColour(wx.BLACK)
+    
+    return bitmap

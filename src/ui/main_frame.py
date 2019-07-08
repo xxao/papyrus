@@ -34,6 +34,7 @@ from .pdf_view import PDFView
 from .collections_view import CollectionsView, CollectionsEditDlg
 from .repository_view import RepositoryView
 from .labels_view import LabelsView, LabelsEditDlg
+from .stats_view import StatsView
 
 # compile patterns
 DETAILS_URL_PATTERN = re.compile("papyrus:\?(?P<parameter>[a-z]+)=(?P<value>.+)")
@@ -1439,6 +1440,14 @@ class MainFrame(wx.Frame):
         self.AUIManager.Update()
     
     
+    def _on_view_stats(self, evt):
+        """Shows library statistics view."""
+        
+        dlg = StatsView(self, self._library)
+        response = dlg.ShowModal()
+        dlg.Destroy()
+    
+    
     def _make_ui(self):
         """Makes main UI."""
         
@@ -1597,6 +1606,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_COLLECTIONS)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_PDF)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_DETAILS)
+        self.Bind(wx.EVT_MENU, self._on_view_stats, id=ID_VIEW_STATS)
     
     
     def _update_config(self):

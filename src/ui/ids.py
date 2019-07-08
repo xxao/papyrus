@@ -9,6 +9,7 @@ ID_QUIT = wx.ID_EXIT
 ID_VIEW_COLLECTIONS = wx.NewIdRef()
 ID_VIEW_PDF = wx.NewIdRef()
 ID_VIEW_DETAILS = wx.NewIdRef()
+ID_VIEW_STATS = wx.NewIdRef()
 
 ID_LIBRARY_NEW = wx.NewIdRef()
 ID_LIBRARY_OPEN = wx.NewIdRef()
