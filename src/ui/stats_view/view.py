@@ -18,7 +18,7 @@ class StatsView(wx.Dialog):
         """Initializes repository view panel."""
         
         # init panel
-        wx.Dialog.__init__(self, parent, -1, size=(658, 500), title="Library Statistics", style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, -1, size=(658, 500), title="Library Statistics", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         
         # set library
         self._library = library
@@ -30,11 +30,35 @@ class StatsView(wx.Dialog):
         self.Layout()
         self.Centre(wx.BOTH)
         self.Show(True)
+        
+        # set min size
         self.SetMinSize(self.GetSize())
+        
+        # update data
+        self.UpdateData()
+    
+    
+    def SetLibrary(self, library=None):
+        """Sets current library."""
+        
+        self._library = library
+        self.UpdateData()
+    
+    
+    def UpdateData(self):
+        """Refreshes data from current library."""
+        
+        # show busy status
+        self._status_label.SetLabel("Analyzing library...")
+        self.Sizer.Show(1)
+        self.Layout()
         wx.Yield()
         
-        # load data
-        self._load_data()
+        # analyze data
+        self._show_data()
+        
+        # update status
+        self._status_label.SetLabel("Ready" if self._library is not None else "No library available!")
         self.Sizer.Hide(1)
         self.Layout()
     
@@ -86,25 +110,27 @@ class StatsView(wx.Dialog):
         imported_page.SetSizer(sizer)
         
         # make status
-        status = wx.StaticText(self, -1, "Analyzing library...")
+        self._status_label = wx.StaticText(self, -1, "No library available!")
         
         # pack all
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(notebook, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
-        sizer.Add(status, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
+        sizer.Add(self._status_label, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
         self.SetSizer(sizer)
     
     
-    def _load_data(self):
+    def _show_data(self):
         """Loads all data."""
+        
+        # reset current data
+        self._authors_list.SetItems([])
+        self._journals_list.SetItems([])
+        self._labels_list.SetItems([])
+        self._published_list.SetItems([])
+        self._imported_list.SetItems([])
         
         # check library
         if self._library is None:
-            self._authors_list.SetItems([])
-            self._journals_list.SetItems([])
-            self._labels_list.SetItems([])
-            self._published_list.SetItems([])
-            self._imported_list.SetItems([])
             return
         
         # load articles
