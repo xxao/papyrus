@@ -136,14 +136,11 @@ class StatsListModel(wxdv.DataViewIndexListModel):
     def _make_gauge(self, value):
         """Gets bar for given value."""
         
-        width = 305 * value / max(x[1] for x in self._data)
-        
         img = images.gauge(
-            width = width,
+            width = 305,
             height = 11,
-            value = 1,
+            value = value / max(x[1] for x in self._data),
             outline = wx.Pen(mwx.STATSBAR_OUTLINE_COLOUR, 1, wx.PENSTYLE_SOLID),
-            fill = wx.Brush(mwx.STATSBAR_FILL_COLOUR, wx.BRUSHSTYLE_SOLID),
-            bgr = None)
+            fill = wx.Brush(mwx.STATSBAR_FILL_COLOUR, wx.BRUSHSTYLE_SOLID))
         
         return img
