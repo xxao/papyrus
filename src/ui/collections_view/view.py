@@ -222,6 +222,8 @@ class CollectionsView(wx.Panel):
             menu.AppendSeparator()
             menu.Append(ID_LIBRARY_NEW, "New Library...")
             menu.Append(ID_LIBRARY_OPEN, "Open Library...")
+            menu.AppendSeparator()
+            menu.Append(ID_LIBRARY_ANALYZE, "Analyze Library")
         
         # add items for trash
         elif collection.group == "system" and collection.title == "Trash":

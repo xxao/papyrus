@@ -28,9 +28,9 @@ class MenuBar(wx.MenuBar):
         
         # init menus
         self._make_file_menu()
-        self._make_collections_menu()
+        self._make_view_menu()
         self._make_articles_menu()
-        self._make_window_menu()
+        self._make_collections_menu()
         
         # update status
         self.SetLibrary()
@@ -49,28 +49,10 @@ class MenuBar(wx.MenuBar):
         self.Enable(ID_LABELS_NEW, self._library is not None)
         self.Enable(ID_ARTICLES_NEW, self._library is not None)
         self.Enable(ID_ARTICLES_IMPORT, self._library is not None)
-        self.Enable(ID_VIEW_STATS, self._library is not None)
         
         # set others
         self.SetCollection()
         self.SetArticles()
-    
-    
-    def SetCollection(self, collection=None):
-        """Sets selected collections."""
-        
-        # set collection
-        self._collection = collection
-        
-        # enable menu items for manual and smart collections
-        is_custom = collection is not None and collection.group == "custom"
-        self.Enable(ID_COLLECTIONS_EDIT, is_custom)
-        self.Enable(ID_COLLECTIONS_DELETE, is_custom)
-        
-        # enable menu items for labels
-        is_label = collection is not None and collection.group == "labels"
-        self.Enable(ID_LABELS_EDIT, is_label)
-        self.Enable(ID_LABELS_DELETE, is_label)
     
     
     def SetArticles(self, articles=None):
@@ -116,6 +98,23 @@ class MenuBar(wx.MenuBar):
         self._update_colour_menu()
     
     
+    def SetCollection(self, collection=None):
+        """Sets selected collections."""
+        
+        # set collection
+        self._collection = collection
+        
+        # enable menu items for manual and smart collections
+        is_custom = collection is not None and collection.group == "custom"
+        self.Enable(ID_COLLECTIONS_EDIT, is_custom)
+        self.Enable(ID_COLLECTIONS_DELETE, is_custom)
+        
+        # enable menu items for labels
+        is_label = collection is not None and collection.group == "labels"
+        self.Enable(ID_LABELS_EDIT, is_label)
+        self.Enable(ID_LABELS_DELETE, is_label)
+    
+    
     def _make_file_menu(self):
         """Makes file sub-menu."""
         
@@ -137,33 +136,24 @@ class MenuBar(wx.MenuBar):
         self.Append(menu, '&File')
     
     
-    def _make_collections_menu(self):
-        """Makes collections sub-menu."""
+    def _make_view_menu(self):
+        """Makes view sub-menu."""
         
         # init menu
         menu = wx.Menu()
         
         # add items
-        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "New from Selection...\t"+HK_COLLECTIONS_NEW_FROM_SELECTION)
-        
-        menu.AppendSeparator()
-        menu.Append(ID_COLLECTIONS_NEW_MANUAL, "New Collection...")
-        menu.Append(ID_COLLECTIONS_NEW_SMART, "New Smart Collection...")
-        menu.Append(ID_LABELS_NEW, "New Label...")
-        
-        menu.AppendSeparator()
-        menu.Append(ID_COLLECTIONS_EDIT, "Edit Collection...")
-        menu.Append(ID_COLLECTIONS_DELETE, "Delete Collection")
-        
-        menu.AppendSeparator()
-        menu.Append(ID_LABELS_EDIT, "Edit Label...")
-        menu.Append(ID_LABELS_DELETE, "Delete Label")
-        
-        menu.AppendSeparator()
-        menu.Append(ID_COLLECTIONS_EMPTY_TRASH, "Empty Trash")
+        menu.Append(ID_VIEW_COLLECTIONS, "Show Collections\t"+HK_VIEW_COLLECTIONS, kind=wx.ITEM_CHECK)
+        menu.Append(ID_VIEW_PDF, "Show PDF Preview\t"+HK_VIEW_PDF, kind=wx.ITEM_CHECK)
+        menu.Append(ID_VIEW_DETAILS, "Show Article Details\t"+HK_VIEW_DETAILS, kind=wx.ITEM_CHECK)
         
         # add to menu bar
-        self.Append(menu, '&Collections')
+        self.Append(menu, '&View')
+        
+        # set state
+        self.Check(ID_VIEW_COLLECTIONS, config.SETTINGS['collections_view_enabled'])
+        self.Check(ID_VIEW_PDF, config.SETTINGS['pdf_view_enabled'])
+        self.Check(ID_VIEW_DETAILS, config.SETTINGS['details_view_enabled'])
     
     
     def _make_articles_menu(self):
@@ -207,6 +197,35 @@ class MenuBar(wx.MenuBar):
         
         # add to menu bar
         self.Append(menu, '&Articles')
+    
+    
+    def _make_collections_menu(self):
+        """Makes collections sub-menu."""
+        
+        # init menu
+        menu = wx.Menu()
+        
+        # add items
+        menu.Append(ID_COLLECTIONS_NEW_FROM_SELECTION, "New from Selection...\t"+HK_COLLECTIONS_NEW_FROM_SELECTION)
+        
+        menu.AppendSeparator()
+        menu.Append(ID_COLLECTIONS_NEW_MANUAL, "New Collection...")
+        menu.Append(ID_COLLECTIONS_NEW_SMART, "New Smart Collection...")
+        menu.Append(ID_LABELS_NEW, "New Label...")
+        
+        menu.AppendSeparator()
+        menu.Append(ID_COLLECTIONS_EDIT, "Edit Collection...")
+        menu.Append(ID_COLLECTIONS_DELETE, "Delete Collection")
+        
+        menu.AppendSeparator()
+        menu.Append(ID_LABELS_EDIT, "Edit Label...")
+        menu.Append(ID_LABELS_DELETE, "Delete Label")
+        
+        menu.AppendSeparator()
+        menu.Append(ID_COLLECTIONS_EMPTY_TRASH, "Empty Trash")
+        
+        # add to menu bar
+        self.Append(menu, '&Collections')
     
     
     def _make_rating_menu(self):
@@ -267,28 +286,6 @@ class MenuBar(wx.MenuBar):
         menu.FindItemById(ID_ARTICLES_COLOUR_PURPLE).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_PURPLE, wx.BRUSHSTYLE_SOLID)))
         
         return menu
-    
-    
-    def _make_window_menu(self):
-        """Makes window sub-menu."""
-        
-        # init menu
-        menu = wx.Menu()
-        
-        # add items
-        menu.Append(ID_VIEW_COLLECTIONS, "Show Collections\t"+HK_VIEW_COLLECTIONS, kind=wx.ITEM_CHECK)
-        menu.Append(ID_VIEW_PDF, "Show PDF Preview\t"+HK_VIEW_PDF, kind=wx.ITEM_CHECK)
-        menu.Append(ID_VIEW_DETAILS, "Show Article Details\t"+HK_VIEW_DETAILS, kind=wx.ITEM_CHECK)
-        menu.AppendSeparator()
-        menu.Append(ID_VIEW_STATS, "Show Statistics\t"+HK_VIEW_STATS)
-        
-        # add to menu bar
-        self.Append(menu, '&Window')
-        
-        # set state
-        self.Check(ID_VIEW_COLLECTIONS, config.SETTINGS['collections_view_enabled'])
-        self.Check(ID_VIEW_PDF, config.SETTINGS['pdf_view_enabled'])
-        self.Check(ID_VIEW_DETAILS, config.SETTINGS['details_view_enabled'])
         
     
     def _update_rating_menu(self):

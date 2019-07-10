@@ -239,6 +239,14 @@ class MainFrame(wx.Frame):
         self.OpenDocuments([path])
     
     
+    def _on_library_analyze(self, evt):
+        """Shows library statistics view."""
+        
+        dlg = StatsView(self, self._library)
+        dlg.ShowModal()
+        dlg.Destroy()
+    
+    
     def _on_collections_selection_changed(self, evt=None):
         """Handles collection selection changed event."""
         
@@ -1440,14 +1448,6 @@ class MainFrame(wx.Frame):
         self.AUIManager.Update()
     
     
-    def _on_view_stats(self, evt):
-        """Shows library statistics view."""
-        
-        dlg = StatsView(self, self._library)
-        dlg.ShowModal()
-        dlg.Destroy()
-    
-    
     def _make_ui(self):
         """Makes main UI."""
         
@@ -1606,7 +1606,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_COLLECTIONS)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_PDF)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_DETAILS)
-        self.Bind(wx.EVT_MENU, self._on_view_stats, id=ID_VIEW_STATS)
+        self.Bind(wx.EVT_MENU, self._on_library_analyze, id=ID_LIBRARY_ANALYZE)
     
     
     def _update_config(self):
