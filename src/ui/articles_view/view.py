@@ -243,12 +243,12 @@ class ArticlesView(wx.Panel):
         bgr = wx.Brush(mwx.RATING_BGR_COLOUR, wx.BRUSHSTYLE_SOLID)
         
         bullets = (
-            (ID_ARTICLES_RATING_0, 0, "None"),
-            (ID_ARTICLES_RATING_1, 1, "Bad"),
-            (ID_ARTICLES_RATING_2, 2, "Poor"),
-            (ID_ARTICLES_RATING_3, 3, "Ok"),
-            (ID_ARTICLES_RATING_4, 4, "Good"),
-            (ID_ARTICLES_RATING_5, 5, "Excellent"))
+            (ID_ARTICLES_RATING_0, 0, "None\t"+HK_ARTICLES_RATING_0),
+            (ID_ARTICLES_RATING_1, 1, "Bad\t"+HK_ARTICLES_RATING_1),
+            (ID_ARTICLES_RATING_2, 2, "Poor\t"+HK_ARTICLES_RATING_2),
+            (ID_ARTICLES_RATING_3, 3, "Ok\t"+HK_ARTICLES_RATING_3),
+            (ID_ARTICLES_RATING_4, 4, "Good\t"+HK_ARTICLES_RATING_4),
+            (ID_ARTICLES_RATING_5, 5, "Excellent\t"+HK_ARTICLES_RATING_5))
         
         for id, value, text in bullets:
             
