@@ -123,11 +123,12 @@ class MenuBar(wx.MenuBar):
         
         # add items
         menu.Append(ID_ARTICLES_NEW, "New Article...\t"+HK_ARTICLES_NEW)
-        menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
-        
-        menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
-        menu.AppendSeparator()
         menu.Append(ID_ARTICLES_IMPORT, "Import Articles...\t"+HK_ARTICLES_IMPORT)
+        
+        menu.AppendSeparator()
+        menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
+        menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
+        menu.Append(ID_LIBRARY_ANALYZE, "Analyze Library\t"+HK_LIBRARY_ANALYZE)
         
         menu.AppendSeparator()
         menu.Append(ID_QUIT, "Quit Papyrus\t"+HK_QUIT)
@@ -233,28 +234,30 @@ class MenuBar(wx.MenuBar):
         
         # init menu
         menu = wx.Menu()
-        
+
         # add items
-        menu.Append(ID_ARTICLES_RATING_0, "0", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_RATING_1, "1", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_RATING_2, "2", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_RATING_3, "3", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_RATING_4, "4", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_RATING_5, "5", kind=wx.ITEM_CHECK)
-        
-        # add icons
         radius = 5
         space = 2
         outline = wx.Pen(mwx.RATING_OUTLINE_COLOUR, 1, wx.PENSTYLE_SOLID)
-        fill = wx.Brush(mwx.RATING_FILL_COLOUR, wx.BRUSHSTYLE_SOLID)
+        fill_checked = wx.Brush(mwx.RATING_FILL_COLOUR, wx.BRUSHSTYLE_SOLID)
+        fill_unchecked = wx.Brush(mwx.RATING_FILL_COLOUR_UNCHECKED, wx.BRUSHSTYLE_SOLID)
         bgr = wx.Brush(mwx.RATING_BGR_COLOUR, wx.BRUSHSTYLE_SOLID)
         
-        menu.FindItemById(ID_ARTICLES_RATING_0).SetBitmap(images.rating(0, radius, space, outline, fill, bgr))
-        menu.FindItemById(ID_ARTICLES_RATING_1).SetBitmap(images.rating(1, radius, space, outline, fill, bgr))
-        menu.FindItemById(ID_ARTICLES_RATING_2).SetBitmap(images.rating(2, radius, space, outline, fill, bgr))
-        menu.FindItemById(ID_ARTICLES_RATING_3).SetBitmap(images.rating(3, radius, space, outline, fill, bgr))
-        menu.FindItemById(ID_ARTICLES_RATING_4).SetBitmap(images.rating(4, radius, space, outline, fill, bgr))
-        menu.FindItemById(ID_ARTICLES_RATING_5).SetBitmap(images.rating(5, radius, space, outline, fill, bgr))
+        bullets = (
+            (ID_ARTICLES_RATING_0, 0, "None"),
+            (ID_ARTICLES_RATING_1, 1, "Bad"),
+            (ID_ARTICLES_RATING_2, 2, "Poor"),
+            (ID_ARTICLES_RATING_3, 3, "Ok"),
+            (ID_ARTICLES_RATING_4, 4, "Good"),
+            (ID_ARTICLES_RATING_5, 5, "Excellent"))
+        
+        for id, value, text in bullets:
+            
+            item = wx.MenuItem(menu, id, text, kind=wx.ITEM_CHECK)
+            bullet = images.rating(value, radius, space, outline, fill_unchecked, bgr)
+            bullet_checked = images.rating(value, radius, space, outline, fill_checked, bgr)
+            item.SetBitmaps(bullet_checked, bullet)
+            menu.Append(item)
         
         return menu
     
@@ -266,24 +269,26 @@ class MenuBar(wx.MenuBar):
         menu = wx.Menu()
         
         # add items
-        menu.Append(ID_ARTICLES_COLOUR_GRAY, "None", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_RED, "Red", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_ORANGE, "Orange", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_YELLOW, "Yellow", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_GREEN, "Green", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_BLUE, "Blue", kind=wx.ITEM_CHECK)
-        menu.Append(ID_ARTICLES_COLOUR_PURPLE, "Purple", kind=wx.ITEM_CHECK)
-        
-        # add icons
+        size = 5
         outline = wx.Pen(mwx.COLOUR_BULLET_OUTLINE_COLOUR, 1, wx.PENSTYLE_SOLID)
+        outline_checked = wx.Pen(mwx.COLOUR_BULLET_OUTLINE_COLOUR_CHECKED, 1, wx.PENSTYLE_SOLID)
         
-        menu.FindItemById(ID_ARTICLES_COLOUR_GRAY).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_GRAY, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_RED).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_RED, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_ORANGE).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_ORANGE, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_YELLOW).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_YELLOW, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_GREEN).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_GREEN, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_BLUE).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_BLUE, wx.BRUSHSTYLE_SOLID)))
-        menu.FindItemById(ID_ARTICLES_COLOUR_PURPLE).SetBitmap(images.bullet(6, outline, wx.Brush(mwx.COLOUR_BULLET_PURPLE, wx.BRUSHSTYLE_SOLID)))
+        bullets = (
+            (ID_ARTICLES_COLOUR_GRAY, "None", mwx.COLOUR_BULLET_GRAY),
+            (ID_ARTICLES_COLOUR_RED, "Red", mwx.COLOUR_BULLET_RED),
+            (ID_ARTICLES_COLOUR_ORANGE, "Orange", mwx.COLOUR_BULLET_ORANGE),
+            (ID_ARTICLES_COLOUR_YELLOW, "Yellow", mwx.COLOUR_BULLET_YELLOW),
+            (ID_ARTICLES_COLOUR_GREEN, "Green", mwx.COLOUR_BULLET_GREEN),
+            (ID_ARTICLES_COLOUR_BLUE, "Blue", mwx.COLOUR_BULLET_BLUE),
+            (ID_ARTICLES_COLOUR_PURPLE, "Purple", mwx.COLOUR_BULLET_PURPLE))
+        
+        for id, text, colour in bullets:
+            
+            item = wx.MenuItem(menu, id, text, kind=wx.ITEM_CHECK)
+            bullet = images.bullet(size, outline, wx.Brush(colour, wx.BRUSHSTYLE_SOLID))
+            bullet_checked = images.bullet(size, outline_checked, wx.Brush(colour, wx.BRUSHSTYLE_SOLID))
+            item.SetBitmaps(bullet_checked, bullet)
+            menu.Append(item)
         
         return menu
         
