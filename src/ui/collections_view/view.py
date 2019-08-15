@@ -232,7 +232,7 @@ class CollectionsView(wx.Panel):
         # add items for articles
         elif collection.group == "system" and collection.title == "Articles":
             menu.Append(ID_ARTICLES_NEW, "New Article...")
-            menu.Append(ID_ARTICLES_IMPORT, "Import PDFs...")
+            menu.Append(ID_ARTICLES_IMPORT, "Import PDF...")
         
         # add items for custom collections
         elif collection.group == "custom" and not collection.query:

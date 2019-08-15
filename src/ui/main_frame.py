@@ -842,8 +842,8 @@ class MainFrame(wx.Frame):
         """Imports articles PDFs."""
         
         # raise open dialog
-        wildcard =  "Adobe PDF Files (*.pdf)|*.pdf"
-        dlg = wx.FileDialog(self, "Import PDFs", "", "", wildcard=wildcard, style=wx.FD_OPEN|wx.FD_MULTIPLE|wx.FD_FILE_MUST_EXIST)
+        wildcard = "Adobe PDF Files (*.pdf)|*.pdf"
+        dlg = wx.FileDialog(self, "Import PDF", "", "", wildcard=wildcard, style=wx.FD_OPEN|wx.FD_MULTIPLE|wx.FD_FILE_MUST_EXIST)
         if dlg.ShowModal() == wx.ID_OK:
             paths = dlg.GetPaths()
             dlg.Destroy()
