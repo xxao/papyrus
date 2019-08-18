@@ -166,7 +166,7 @@ class ArticlesView(wx.Panel):
 
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_MATCH, "Match to PubMed...\t"+HK_ARTICLES_MATCH)
-            menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed...\t"+HK_ARTICLES_UPDATE)
+            menu.Append(ID_ARTICLES_UPDATE, "Update by PubMed\t"+HK_ARTICLES_UPDATE)
             
             menu.AppendSeparator()
             menu.Append(ID_ARTICLES_TRASH, "Move to Trash")
