@@ -1033,9 +1033,8 @@ class MainFrame(wx.Frame):
         # refresh articles view
         self._articles_view.ShowArticles()
         
-        # re-select article
-        if len(articles) == 1:
-            self._articles_view.SetSelectedArticles([articles[0]])
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_colour(self, evt=None, colour=None):
@@ -1082,9 +1081,8 @@ class MainFrame(wx.Frame):
         # refresh articles view
         self._articles_view.ShowArticles()
         
-        # re-select article
-        if len(articles) == 1:
-            self._articles_view.SetSelectedArticles([articles[0]])
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_labels(self, evt=None):
@@ -1122,9 +1120,8 @@ class MainFrame(wx.Frame):
         # refresh articles view
         self._articles_view.ShowArticles()
         
-        # re-select article
-        if len(articles) == 1:
-            self._articles_view.SetSelectedArticles([articles[0]])
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_match(self, evt=None):
@@ -1203,9 +1200,8 @@ class MainFrame(wx.Frame):
         # refresh articles view
         self._articles_view.ShowArticles()
         
-        # re-select article
-        if len(articles) == 1:
-            self._articles_view.SetSelectedArticles([articles[0]])
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_attach_pdf(self, evt=None):
@@ -1268,6 +1264,9 @@ class MainFrame(wx.Frame):
         
         # refresh articles view
         self._articles_view.ShowArticles()
+        
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_dropped_to_trash(self, evt):
@@ -1303,6 +1302,9 @@ class MainFrame(wx.Frame):
         
         # refresh articles view
         self._articles_view.ShowArticles()
+        
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_articles_dropped_to_label(self, evt):
@@ -1321,6 +1323,9 @@ class MainFrame(wx.Frame):
         
         # refresh articles view
         self._articles_view.ShowArticles()
+        
+        # re-select articles
+        self._articles_view.SetSelectedArticles(articles)
     
     
     def _on_details_navigating(self, evt):
