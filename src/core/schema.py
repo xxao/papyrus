@@ -5,7 +5,7 @@
 import shutil
 
 # set database schema version
-VERSION = 3
+VERSION = 4
 
 
 class Schema(object):
@@ -93,7 +93,7 @@ class Schema(object):
                     id              INTEGER PRIMARY KEY NOT NULL,
                     shortname       TEXT NOT NULL,
                     lastname        TEXT NOT NULL,
-                    firstname       TEXT NOT NULL,
+                    firstname       TEXT,
                     initials        TEXT
                 );
                 
@@ -208,3 +208,20 @@ class Schema(object):
         
         # commit changes
         self._db.connection.commit()
+    
+    
+    def _update_3_to_4(self):
+        """Runs schema update to allow empty author's first name."""
+
+        self._db.cursor.execute("PRAGMA writable_schema = 1")
+        self._db.cursor.execute("UPDATE SQLITE_MASTER SET SQL = replace(SQL, 'firstname       TEXT NOT NULL', 'firstname       TEXT') WHERE NAME = 'authors'")
+        self._db.cursor.execute("PRAGMA writable_schema = 0")
+        
+        # set version
+        self.set_version(4, "Allow empty author's first name.")
+        
+        # commit changes
+        self._db.connection.commit()
+        
+        # refresh
+        self._db.cursor.execute("VACUUM")
