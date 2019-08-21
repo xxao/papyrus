@@ -97,8 +97,9 @@ class ArticlesEditDlg(wx.Dialog):
         
         # get year
         if self._year_value.IsModified():
+            year = self._year_value.GetValue().strip()
             try:
-                year = int(self._year_value.GetValue().strip())
+                year = int(year) if year else None
             except ValueError:
                 wx.Bell()
                 return

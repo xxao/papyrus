@@ -3,6 +3,7 @@
 
 # import modules
 import random
+import shutil
 import time
 import os
 import os.path
@@ -1048,13 +1049,14 @@ class Library(object):
         if not old_path or old_path == new_path or not os.path.exists(old_path):
             return
         
-        # rename or remove old PDF
-        if not new_article.pdf:
-            try: os.remove(old_path)
+        # copy PDF with new name
+        if new_article.pdf:
+            try: shutil.copy(old_path, new_path)
             except IOError: pass
-        else:
-            try: os.rename(old_path, new_path)
-            except IOError: pass
+        
+        # remove old PDF
+        try: os.remove(old_path)
+        except IOError: pass
     
     
     def _update_authors_pdf(self, new_author, old_authors):
