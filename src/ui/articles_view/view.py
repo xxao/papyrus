@@ -46,6 +46,12 @@ class ArticlesView(wx.Panel):
         return self._list.GetSelectedArticles()
     
     
+    def GetColumnsSettings(self):
+        """Gets current column order and settings."""
+        
+        return self._list.GetColumnsSettings()
+    
+    
     def SetLibrary(self, library):
         """Sets library database."""
         

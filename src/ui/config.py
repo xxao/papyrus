@@ -38,7 +38,10 @@ _PARAMS = dict(
     # automatic (re)moving of PDF cover page
     # mode: 1-delete, 2-move to end
     cover_remove_mode = [None, int, True],
-    cover_remove_tag = [None, str, True]
+    cover_remove_tag = [None, str, True],
+    
+    # articles view columns
+    articles_view_columns = [None, tuple, True],
 )
 
 # init default settings

@@ -1626,7 +1626,7 @@ class MainFrame(wx.Frame):
             config.SETTINGS['app_height'] = size[1]
             config.SETTINGS['app_maximized'] = False
         
-        # panes
+        # panes size
         pane = self.AUIManager.GetPane(self._collections_view)
         config.SETTINGS['collections_view_enabled'] = pane.IsShown()
         if pane.IsShown():
@@ -1641,6 +1641,9 @@ class MainFrame(wx.Frame):
         config.SETTINGS['details_view_enabled'] = pane.IsShown()
         if pane.IsShown():
             config.SETTINGS['details_view_width'] = pane.window.GetClientSize()[0]
+        
+        # article view
+        config.SETTINGS['articles_view_columns'] = self._articles_view.GetColumnsSettings()
     
     
     def _search_repository(self, query):

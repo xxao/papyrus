@@ -5,6 +5,7 @@
 import wx
 import wx.dataview as wxdv
 
+from .. import config
 from .. import mwx
 from .. import events
 from . list_model import ArticlesListModel
@@ -22,6 +23,7 @@ class ArticlesList(wx.Panel):
         
         # init buffers
         self._articles = []
+        self._columns = []
         
         # make ui
         self._make_ui()
@@ -53,6 +55,29 @@ class ArticlesList(wx.Panel):
         
         # get articles
         return [self._articles[x] for x in rows]
+    
+    
+    def GetColumnsSettings(self):
+        """Gets current column order and settings."""
+        
+        # init buffer
+        columns = [None]*len(self._columns)
+        columns[0] = ['expander', False, 0, None]
+        
+        # get sorting column
+        sort_column = self._list_ctrl.GetSortingColumn()
+        
+        # get settings
+        for i in range(1, len(self._columns)):
+            
+            name = self._columns[i][0]
+            col = self._list_ctrl.GetColumn(i)
+            pos = self._list_ctrl.GetColumnPosition(col)
+            sorting = col.SortOrder if (col is sort_column) else None
+            
+            columns[pos] = (name, col.Shown, col.Width, sorting)
+        
+        return columns
     
     
     def SetSelectedArticles(self, articles):
@@ -114,38 +139,38 @@ class ArticlesList(wx.Panel):
     def _make_ui(self):
         """Makes panel UI."""
         
+        # get columns
+        self._columns = self._init_columns()
+        names = [c[0] for c in self._columns]
+        
         # init list control
         self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER|wxdv.DV_ROW_LINES|wxdv.DV_VERT_RULES|wxdv.DV_MULTIPLE)
-        self._list_model = ArticlesListModel(self._articles)
+        self._list_model = ArticlesListModel(names, self._articles)
         self._list_ctrl.AssociateModel(self._list_model)
         self._list_ctrl.EnableDragSource(mwx.ArticlesIDsDropData().GetFormat())
         
         # add columns
-        self._list_ctrl.AppendTextColumn("Expander", 0, width=0, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendBitmapColumn("", 1, width=24, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendBitmapColumn("", 2, width=24, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendBitmapColumn("Rating", 3, width=70, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Author", 4, width=180, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendTextColumn("Title", 5, width=360, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendTextColumn("Journal", 6, width=180, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendTextColumn("Imported", 7, width=90, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Year", 8, width=45, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Volume", 9, width=60, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Issue", 10, width=45, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Pages", 11, width=90, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("DOI", 12, width=200, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
-        self._list_ctrl.AppendTextColumn("Key", 13, width=60, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("PMID", 14, width=70, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_CENTER)
-        self._list_ctrl.AppendTextColumn("Labels", 15, width=200, mode=wxdv.DATAVIEW_CELL_INERT, align=wx.ALIGN_LEFT)
+        idx = 0
+        for name, header, style, visible, width, align, sorting in self._columns:
+            if style == 'bitmap':
+                self._list_ctrl.AppendBitmapColumn(header, idx, width=width, mode=wxdv.DATAVIEW_CELL_INERT, align=align)
+            else:
+                self._list_ctrl.AppendTextColumn(header, idx, width=width, mode=wxdv.DATAVIEW_CELL_INERT, align=align)
+            idx += 1
         
         # hide expander column
-        self._list_ctrl.Columns[0].SetHidden(True)
+        self._list_ctrl.Columns[0].SetHidden(not visible)
         
         # set columns properties
-        for c in self._list_ctrl.Columns:
+        for i, c in enumerate(self._list_ctrl.Columns):
+            
             c.Sortable = True
             c.Reorderable = True
             c.GetRenderer().EnableEllipsize(wx.ELLIPSIZE_END)
+            
+            sort_order = self._columns[i][6]
+            if sort_order is not None:
+                c.SetSortOrder(sort_order)
         
         # bind events
         self._list_ctrl.Bind(wxdv.EVT_DATAVIEW_SELECTION_CHANGED, self._on_selection_changed)
@@ -157,3 +182,63 @@ class ArticlesList(wx.Panel):
         # add to sizer
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
         self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND|wx.ALL, mwx.LIST_CTRL_SPACE)
+    
+    
+    def _init_columns(self):
+        """Initialize visible columns."""
+        
+        # get columns
+        columns = (
+            ['expander', "Expander", 'text', False, 0, wx.ALIGN_CENTER, None],
+            ['colour', "", 'bitmap', True, 24, wx.ALIGN_CENTER, None],
+            ['pdf', "", 'bitmap', True, 24, wx.ALIGN_CENTER, None],
+            ['rating', "Rating", 'bitmap', True, 70, wx.ALIGN_CENTER, None],
+            ['authors', "Authors", 'text', True, 180, wx.ALIGN_LEFT, None],
+            ['title', "Title", 'text', True, 360, wx.ALIGN_LEFT, None],
+            ['journal', "Journal", 'text', True, 180, wx.ALIGN_LEFT, None],
+            ['year', "Year", 'text', True, 45, wx.ALIGN_CENTER, None],
+            ['volume', "Volume", 'text', True, 60, wx.ALIGN_CENTER, None],
+            ['issue', "Issue", 'text', True, 45, wx.ALIGN_CENTER, None],
+            ['pages', "Pages", 'text', True, 90, wx.ALIGN_CENTER, None],
+            ['doi', "DOI", 'text', True, 200, wx.ALIGN_LEFT, None],
+            ['key', "Key", 'text', True, 60, wx.ALIGN_CENTER, None],
+            ['pmid', "PMID", 'text', True, 70, wx.ALIGN_CENTER, None],
+            ['imported', "Imported", 'text', True, 90, wx.ALIGN_CENTER, False],
+            ['labels', "Labels", 'text', True, 200, wx.ALIGN_LEFT, None],
+        )
+        
+        # apply user settings
+        if config.SETTINGS['articles_view_columns']:
+            
+            try:
+                
+                # init lookup
+                pos = -len(columns)
+                lookup = {c[0]:[i,c] for i,c in enumerate(columns)}
+                lookup['expander'][0] = pos - 1
+                
+                # update columns
+                for name, visible, width, sorting in config.SETTINGS['articles_view_columns']:
+                    
+                    # get column
+                    column = lookup.get(name, None)
+                    if column is None:
+                        continue
+                    
+                    # update column
+                    column[1][3] = bool(visible)
+                    column[1][4] = int(width)
+                    column[1][6] = sorting
+                    
+                    # update position
+                    column[0] = pos
+                    pos += 1
+                
+                # get final sorted columns
+                columns = sorted(lookup.values(), key=lambda c:c[0])
+                columns = [c[1] for c in columns]
+            
+            except:
+                pass
+        
+        return columns

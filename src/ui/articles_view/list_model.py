@@ -16,28 +16,12 @@ class ArticlesListModel(wxdv.DataViewIndexListModel):
     """Articles list data source model."""
     
     
-    def __init__(self, data=None):
+    def __init__(self, columns, data=None):
         """Initializes data source model."""
         
         # init data
         self._data = data if data is not None else []
-        self._col_names = [
-            'expander',
-            'colour',
-            'pdf',
-            'rating',
-            'authors',
-            'title',
-            'journal',
-            'import',
-            'year',
-            'volume',
-            'issue',
-            'pages',
-            'doi',
-            'key',
-            'pmid',
-            'labels']
+        self._col_names = columns
         
         wxdv.DataViewIndexListModel.__init__(self, len(self._data))
         
@@ -102,7 +86,7 @@ class ArticlesListModel(wxdv.DataViewIndexListModel):
         if name == "journal":
             return value
         
-        if name == "import":
+        if name == "imported":
             return datetime.datetime.utcfromtimestamp(value).strftime('%Y-%m-%d')
         
         if name == "year":
@@ -158,7 +142,7 @@ class ArticlesListModel(wxdv.DataViewIndexListModel):
         if name == "journal":
             return item.journal.abbreviation if item.journal else None
         
-        if name == "import":
+        if name == "imported":
             return item.imported
         
         if name == "year":
