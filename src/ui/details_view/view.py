@@ -158,7 +158,7 @@ class DetailsView(wx.Panel):
         ratings = ("none", "bad", "poor", "ok", "good", "excellent")
         for i in range(1,6):
             selected = "selected" if self._article.rating >= i else ""
-            html += '<a href="papyrus:?rating=%d" class="%s" title="Set article rating to: %s">&#x25CF;</a>' % (i, selected, ratings[i])
+            html += '<a href="papyrus:?rating=%d" class="%s" title="%s">&#x25CF;</a>' % (i, selected, ratings[i].title())
         html += '</div>'
         
         # add colour
@@ -166,7 +166,7 @@ class DetailsView(wx.Panel):
         for c in ("gray", "red", "orange", "yellow", "green", "blue", "purple"):
             colour = mwx.rgb_to_hex(mwx.COLOUR_BULLETS_NAMES[c])
             selected = "selected" if self._article.colour == colour else ""
-            html += '<a href="papyrus:?colour=%s" class="%s" style="background-color:#%s;" title="Set article color to: %s">&nbsp;</a>' % (c, selected, colour, c)
+            html += '<a href="papyrus:?colour=%s" class="%s" style="background-color:#%s;" title="%s">&nbsp;</a>' % (c, selected, colour, c.title())
         html += '</div>'
         
         # add citation
