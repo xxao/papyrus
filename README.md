@@ -14,7 +14,7 @@ Currently there is just a [Windows distribution](dist/) available.
 
 - [Python 3.6+](https://www.python.org)
 - [wxPython](https://pypi.org/project/wxPython/)
-- [PyMuPDF](https://pypi.org/project/PyMuPDF/) Note that latest versions do not work correctly together with wxPython.
+- [PyMuPDF](https://pypi.org/project/PyMuPDF/) - Note that latest versions do not work correctly together with wxPython.
   Last working version is 1.14.16. For the new versions you need to manually apply
   [following fix](https://github.com/wxWidgets/Phoenix/issues/1350).
 
