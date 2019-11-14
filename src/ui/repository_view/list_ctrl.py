@@ -31,10 +31,21 @@ class RepositoryList(wx.Panel):
         """Sets articles to display."""
         
         # set data
+        before = len(self._articles)
         self._articles[:] = articles if articles else []
+        after = len(self._articles)
+        diff = after - before
+        
+        # add rows
+        if diff > 0:
+            for i in range(diff):
+                self._list_model.RowAppended()
+        
+        # remove rows
+        elif diff < 0:
+            self._list_model.RowsDeleted(range(after, before))
         
         # update list
-        self._list_model.Reset(len(self._articles))
         self._list_model.Resort()
     
     
