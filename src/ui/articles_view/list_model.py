@@ -224,7 +224,16 @@ class ArticlesListModel(wxdv.DataViewIndexListModel):
             value2 = value2[0].shortname
         
         # compare values
-        return (value1 > value2) - (value1 < value2)
+        cmp = (value1 > value2) - (value1 < value2)
+        if cmp != 0:
+            return cmp
+        
+        # get article
+        art1 = self._data[row1]
+        art2 = self._data[row2]
+        
+        # compare DBID
+        return (art1.dbid > art2.dbid) - (art1.dbid < art2.dbid)
     
     
     def _get_bullet(self, colour_hex):
