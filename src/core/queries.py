@@ -24,7 +24,8 @@ def make_articles_query(value, tag=None):
         "green": "b4e646",
         "blue": "64afff",
         "purple": "dc8cf0",
-        "gray": "c8c8c8"
+        "gray": "c8c8c8",
+        "none": "c8c8c8"
         }
     
     bools = {

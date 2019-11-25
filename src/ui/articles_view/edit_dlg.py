@@ -48,7 +48,6 @@ class ArticlesEditDlg(wx.Dialog):
         abstract = self._article.abstract
         notes = self._article.notes
         authors = self._article.authors
-        journal = self._article.journal
         doi = self._article.doi
         pmid = self._article.pmid
         volume = self._article.volume
@@ -63,10 +62,6 @@ class ArticlesEditDlg(wx.Dialog):
         # get abstract
         if self._abstract_value.IsModified():
             abstract = self._abstract_value.GetValue().strip()
-        
-        # get notes
-        if self._notes_value.IsModified():
-            notes = self._notes_value.GetValue().strip()
         
         # get authors
         if self._authors_value.IsModified() or not self._authors_switch_check.GetValue():
@@ -104,10 +99,20 @@ class ArticlesEditDlg(wx.Dialog):
                 wx.Bell()
                 return
         
+        # get notes
+        if self._notes_value.IsModified():
+            notes = self._notes_value.GetValue().strip()
+        
+        # get rating
+        rating = self._rating_choice.GetSelection()
+        
+        # get colour
+        colour = mwx.COLOUR_NAMES[self._colour_choice.GetSelection()]
+        colour = mwx.rgb_to_hex(mwx.COLOUR_BULLETS[colour]) if colour != "None" else None
+        
         # update article
         self._article.title = title
         self._article.abstract = abstract
-        self._article.notes = notes
         self._article.authors = authors
         self._article.journal = journal
         self._article.doi = doi
@@ -116,6 +121,9 @@ class ArticlesEditDlg(wx.Dialog):
         self._article.issue = issue
         self._article.pages = pages
         self._article.year = year
+        self._article.notes = notes
+        self._article.rating = rating
+        self._article.colour = colour
         
         # close dialog
         self.EndModal(wx.ID_OK)
@@ -241,7 +249,6 @@ class ArticlesEditDlg(wx.Dialog):
         grid.AddGrowableCol(3)
         grid.AddGrowableRow(1)
         grid.AddGrowableRow(3)
-        grid.AddGrowableRow(4)
         
         # pack items
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
@@ -277,9 +284,35 @@ class ArticlesEditDlg(wx.Dialog):
         text = self._article.notes if self._article.notes else ""
         self._notes_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
         
+        rating_label = wx.StaticText(page, -1, "Rating:")
+        choices = [n.title() for n in mwx.RATING_NAMES]
+        self._rating_choice = wx.Choice(page, -1, choices=choices, size=(200,-1))
+        self._rating_choice.SetSelection(self._article.rating)
+        
+        colour_label = wx.StaticText(page, -1, "Color:")
+        choices = [n.title() for n in mwx.COLOUR_NAMES]
+        self._colour_choice = wx.Choice(page, -1, choices=choices, size=(200,-1))
+        colours = [mwx.rgb_to_hex(mwx.COLOUR_BULLETS[n]) for n in mwx.COLOUR_NAMES]
+        self._colour_choice.SetSelection(colours.index(self._article.colour) if self._article.colour else 0)
+        
+        # pack items
+        grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
+        
+        grid.Add(self._notes_value, (0,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        
+        grid.Add(rating_label, (1,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._rating_choice, (2,0), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        
+        grid.Add(colour_label, (1,1), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._colour_choice, (2,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        
+        grid.AddGrowableCol(0)
+        grid.AddGrowableCol(1)
+        grid.AddGrowableRow(0)
+        
         # pack items
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
-        page.Sizer.Add(self._notes_value, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
         return page
     

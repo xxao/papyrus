@@ -1397,7 +1397,7 @@ class MainFrame(wx.Frame):
         
         # set article colour
         elif parameter == 'colour':
-            colour = mwx.COLOUR_BULLETS_NAMES.get(value, None)
+            colour = mwx.COLOUR_BULLETS.get(value, None)
             if colour is not None:
                 self._on_articles_colour(colour=colour)
         
