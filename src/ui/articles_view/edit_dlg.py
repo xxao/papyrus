@@ -108,7 +108,7 @@ class ArticlesEditDlg(wx.Dialog):
         
         # get colour
         colour = mwx.COLOUR_NAMES[self._colour_choice.GetSelection()]
-        colour = mwx.rgb_to_hex(mwx.COLOUR_BULLETS[colour]) if colour != "None" else None
+        colour = mwx.rgb_to_hex(mwx.COLOUR_BULLETS[colour]) if colour != "none" else None
         
         # update article
         self._article.title = title
