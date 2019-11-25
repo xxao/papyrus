@@ -1,9 +1,6 @@
 #  Created byMartin.cz
 #  Copyright (c) Martin Strohalm. All rights reserved.
 
-# import modules
-import shutil
-
 # set database schema version
 VERSION = 4
 
@@ -165,7 +162,7 @@ class Schema(object):
         
         # backup library
         if version != VERSION:
-            shutil.copy(self._library.db_path, self._library.db_path+".bak")
+            self._library.backup()
         
         # apply updates
         while version < VERSION:

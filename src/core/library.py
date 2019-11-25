@@ -5,6 +5,7 @@
 import random
 import shutil
 import time
+import datetime
 import os
 import os.path
 
@@ -661,6 +662,19 @@ class Library(object):
         # close connection
         if close_db:
             self._db.close()
+    
+    
+    def backup(self):
+        """Creates current database backup."""
+        
+        # get time stamp
+        stamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
+        
+        # init file name
+        filename = "%s_%s.bak" % (self.db_path, stamp)
+        
+        # duplicate file
+        shutil.copy(self.db_path, filename)
     
     
     def _insert_article(self, article):
