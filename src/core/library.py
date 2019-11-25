@@ -1098,13 +1098,13 @@ class Library(object):
         conditions = []
         values = []
         
-        if journal.title:
-            conditions.append("(LOWER(title) = ? OR title = '' OR title IS NULL)")
-            values.append(journal.title.lower())
-        
         if journal.abbreviation:
             conditions.append("(LOWER(abbreviation) = ? OR abbreviation = '' OR abbreviation IS NULL)")
             values.append(journal.abbreviation.lower())
+        
+        elif journal.title:
+            conditions.append("(LOWER(title) = ? OR title = '' OR title IS NULL)")
+            values.append(journal.title.lower())
         
         # check conditions
         if not conditions:
