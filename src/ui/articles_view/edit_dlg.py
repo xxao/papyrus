@@ -69,8 +69,8 @@ class ArticlesEditDlg(wx.Dialog):
             notes = self._notes_value.GetValue().strip()
         
         # get authors
-        if self._authors_value.IsModified():
-            authors = self._get_authors(self._authors_value.GetValue().strip())
+        if self._authors_value.IsModified() or not self._authors_switch_check.GetValue():
+            authors = self._get_authors(self._authors_value.GetValue().strip(), self._authors_switch_check.GetValue())
         
         # get journal
         journal = self._get_journal(self._journal_combo.GetValue().strip())
@@ -168,7 +168,10 @@ class ArticlesEditDlg(wx.Dialog):
         authors_label = wx.StaticText(page, -1, "Authors:")
         text = ", ".join(x.longname for x in self._article.authors)
         self._authors_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
-        self._authors_value.SetToolTip(wx.ToolTip("Lastname Firstname I, Lastname Firstname I"))
+        
+        self._authors_switch_check = wx.CheckBox(page, -1, "Assume last name first")
+        self._authors_switch_check.SetValue(True)
+        self._authors_switch_check.SetToolTip(wx.ToolTip("Lastname Firstname I, Lastname Firstname I"))
         
         journal_label = wx.StaticText(page, -1, "Journal:")
         text = self._article.journal.abbreviation if self._article.journal else ""
@@ -203,32 +206,34 @@ class ArticlesEditDlg(wx.Dialog):
         # pack items
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
         
-        grid.Add(title_label, (0,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._title_value, (1,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(title_label, (0,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._title_value, (1,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(authors_label, (2,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._authors_value, (3,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(authors_label, (2,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._authors_value, (3,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(journal_label, (4,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._journal_combo, (5,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(self._authors_switch_check, (4,0), (1,4), flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
         
-        grid.Add(year_label, (6,0), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._year_value, (7,0), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(journal_label, (5,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._journal_combo, (6,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(volume_label, (6,1), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._volume_value, (7,1), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(year_label, (7,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._year_value, (8,0), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(issue_label, (6,2), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._issue_value, (7,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(volume_label, (7,1), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._volume_value, (8,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(pages_label, (6,3), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._pages_value, (7,3), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(issue_label, (7,2), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._issue_value, (8,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(doi_label, (8,0), (1,2), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._doi_value, (9,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(pages_label, (7,3), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._pages_value, (8,3), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
-        grid.Add(pmid_label, (8,2), (1,2), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._pmid_value, (9,2), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(doi_label, (9,0), (1,2), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._doi_value, (10,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        
+        grid.Add(pmid_label, (9,2), (1,2), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._pmid_value, (10,2), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         
         grid.AddGrowableCol(0)
         grid.AddGrowableCol(1)
@@ -236,6 +241,7 @@ class ArticlesEditDlg(wx.Dialog):
         grid.AddGrowableCol(3)
         grid.AddGrowableRow(1)
         grid.AddGrowableRow(3)
+        grid.AddGrowableRow(4)
         
         # pack items
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
@@ -294,7 +300,7 @@ class ArticlesEditDlg(wx.Dialog):
         return core.Journal(title=value, abbreviation=value)
     
     
-    def _get_authors(self, value):
+    def _get_authors(self, value, last_first):
         """Gets individual authors from string."""
         
         authors = []
@@ -308,8 +314,12 @@ class ArticlesEditDlg(wx.Dialog):
             
             # get authors
             parts = item.strip().split()
-            lastname = parts[0]
-            firstname = " ".join(x for x in parts[1:])
+            if last_first:
+                lastname = parts[0]
+                firstname = " ".join(x for x in parts[1:])
+            else:
+                lastname = parts[-1]
+                firstname = " ".join(x for x in parts[0:-1])
             
             # append author
             authors.append(core.Author(firstname=firstname, lastname=lastname))
