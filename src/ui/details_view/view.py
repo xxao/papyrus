@@ -186,32 +186,40 @@ class DetailsView(wx.Panel):
         html += '<p id="filename">PDF: <a href="papyrus:?pdf=%s" title="Reveal PDF file">%s</a></p>' % (filename, filename) if self._article.pdf else ""
         
         # add authors
-        authors = ''
-        for author in self._article.authors:
-            authors += '<li><a href="papyrus:?author=%s" title="Search PubMed by author">%s</a> <a href="papyrus:?authorid=%s" title="Show articles in library" class="author_count">(%d)</a></li>' % (author.shortname, author.longname, author.dbid, author.count)
-        html += '<ul id="authors">%s</ul>' % authors if authors else ""
+        if self._article.authors:
+            html += '<div id="authors"><h2>Authors</h2><ul>'
+            for item in self._article.authors:
+                html += '<li><a href="papyrus:?author=%s" title="Search PubMed by author">%s</a> ' % (item.shortname, item.longname)
+                html += '<a href="papyrus:?authorid=%s" title="Show articles in library" class="author_count">(%d)</a></li> ' % (item.dbid, item.count)
+            html += '</ul></div>'
         
         # add labels
-        labels = []
-        for label in self._article.labels:
-            labels.append('<a href="papyrus:?labelid=%s" title="Show articles in library">%s</a>' % (label.dbid, label.title))
-        html += '<p id="labels"><strong>LABELS:</strong> %s</p>' % ", ".join(labels) if labels else ""
+        if self._article.labels:
+            html += '<div id="labels"><h2>Labels</h2><p>'
+            for item in self._article.labels:
+                html += '<a href="papyrus:?labelid=%s" title="Show articles in library">%s</a>, ' % (item.dbid, item.title)
+            html = html[:-2] + '</p></div>'
         
         # add collections
-        collections = []
-        for collection in self._article.collections:
-            collections.append('<a href="papyrus:?collectionid=%s" title="Show articles in library">%s</a>' % (collection.dbid, collection.title))
-        html += '<p id="labels"><strong>COLLECTIONS:</strong> %s</p>' % ", ".join(collections) if collections else ""
+        if self._article.collections:
+            html += '<div id="collections"><h2>Collections</h2><p>'
+            for item in self._article.collections:
+                html += '<a href="papyrus:?collectionid=%s" title="Show articles in library">%s</a>, ' % (item.dbid, item.title)
+            html = html[:-2] + '</p></div>'
         
         # add notes
-        notes = self._article.notes or ""
-        notes = notes.replace("\n\n", "<br /><br />")
-        html += '<p id="notes"><strong>NOTES:</strong> %s</p>' % notes if notes else ""
+        if self._article.notes:
+            html += '<div id="notes"><h2>Notes</h2>'
+            for par in self._article.notes.split("\n\n"):
+                html += '<p>%s</p>' % par
+            html += '</div>'
         
         # add abstract
-        abstract = self._article.abstract or ""
-        abstract = abstract.replace("\n\n", "<br /><br />")
-        html += '<p id="abstract"><strong>ABSTRACT:</strong> %s</p>' % abstract if abstract else ""
+        if self._article.abstract:
+            html += '<div id="abstract"><h2>Abstract</h2>'
+            for par in self._article.abstract.split("\n\n"):
+                html += '<p>%s</p>' % par
+            html += '</div>'
         
         # finalize html
         html += HTML_BOTTOM

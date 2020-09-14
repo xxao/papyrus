@@ -26,6 +26,15 @@ HTML_ARTICLE_TOP = """<?xml version="1.0" encoding="utf-8"?>
         background-color: #eee;
     }
     
+    h2{
+        margin: 1.5em 0 0 0;
+        font-size: .9em;
+        font-weight: bold;
+        color: #444;
+        border-bottom: 1px solid #ccc;
+        text-transform: uppercase;
+    }
+    
     #title{
         font-size: 1.2em;
         margin: .3em 0 .7em 0;
@@ -95,9 +104,9 @@ HTML_ARTICLE_TOP = """<?xml version="1.0" encoding="utf-8"?>
         font-style: oblique;
     }
     
-    #authors{
-        margin-left: 0;
-        padding-left: 0;
+    #authors ul{
+        margin: .75em 0 0 0;
+        padding: 0;
         font-size: 1em;
         list-style-position: inside;
     }
@@ -108,16 +117,9 @@ HTML_ARTICLE_TOP = """<?xml version="1.0" encoding="utf-8"?>
         color: #aaa;
     }
     
-    #labels{
-        font-size: 1em;
-    }
-    
-    #abstract{
+    #labels p, #collections p, #notes p, #abstract p{
         font-size: 1.05em;
-    }
-    
-    #notes{
-        font-size: 1.05em;
+        margin: .75em 0;
     }
     
   -->
