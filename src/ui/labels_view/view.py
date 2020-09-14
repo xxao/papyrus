@@ -27,6 +27,10 @@ class LabelsView(wx.Dialog):
         self._labels = labels
         self._search = None
         
+        # set checked value
+        for label in labels:
+            label.checked = all(label.dbid in (y.dbid for y in x.labels) for x in articles)
+        
         # make UI
         self._make_ui()
         

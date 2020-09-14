@@ -25,7 +25,7 @@ class LabelsListModel(wxdv.PyDataViewIndexListModel):
         """Gets type of specified column."""
         
         # get column name
-        name =  self._col_names[col]
+        name = self._col_names[col]
         
         # return type
         if name == "checked":
@@ -38,7 +38,7 @@ class LabelsListModel(wxdv.PyDataViewIndexListModel):
         """Gets value for given row and column."""
         
         # get column name
-        name =  self._col_names[col]
+        name = self._col_names[col]
         
         # get native value
         value = self.GetItemValue(self._data[row], col)
@@ -58,7 +58,7 @@ class LabelsListModel(wxdv.PyDataViewIndexListModel):
         """Gets native column value from given item."""
         
         # get column name
-        name =  self._col_names[col]
+        name = self._col_names[col]
         
         # return value
         if name == "expander":
@@ -124,4 +124,4 @@ class LabelsListModel(wxdv.PyDataViewIndexListModel):
         value2 = self.GetItemValue(self._data[row2], col)
         
         # compare values
-        return (value1>value2)-(value1<value2)
+        return (value1 > value2) - (value1 < value2)

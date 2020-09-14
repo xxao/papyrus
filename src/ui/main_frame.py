@@ -1096,10 +1096,6 @@ class MainFrame(wx.Frame):
         # get available labels
         labels = self._library.search(core.Query("", core.Label.NAME))
         
-        # set checked value
-        for label in labels:
-            label.checked = all(label.dbid in (y.dbid for y in x.labels) for x in articles) 
-        
         # set labels
         dlg = LabelsView(self, articles, labels)
         response = dlg.ShowModal()
