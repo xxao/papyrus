@@ -6,13 +6,14 @@ import wx
 
 import core
 from .. import mwx
+from .. labels_view import LabelsList
 
 
 class ArticlesEditDlg(wx.Dialog):
     """Dialog to edit article."""
     
     
-    def __init__(self, parent, article, journals=[]):
+    def __init__(self, parent, article, journals=(), labels=()):
         """Initializes article dialog."""
         
         # init dialog
@@ -22,6 +23,7 @@ class ArticlesEditDlg(wx.Dialog):
         # init buffers
         self._article = article
         self._journals = journals
+        self._labels = labels
         
         # make UI
         self._make_ui()
@@ -110,6 +112,9 @@ class ArticlesEditDlg(wx.Dialog):
         colour = mwx.COLOUR_NAMES[self._colour_choice.GetSelection()]
         colour = mwx.rgb_to_hex(mwx.COLOUR_BULLETS[colour]) if colour != "none" else None
         
+        # get labels
+        labels = [lb for lb in self._labels if lb.checked]
+        
         # update article
         self._article.title = title
         self._article.abstract = abstract
@@ -124,6 +129,7 @@ class ArticlesEditDlg(wx.Dialog):
         self._article.notes = notes
         self._article.rating = rating
         self._article.colour = colour
+        self._article.labels = labels
         
         # close dialog
         self.EndModal(wx.ID_OK)
@@ -135,6 +141,47 @@ class ArticlesEditDlg(wx.Dialog):
         self.EndModal(wx.ID_CANCEL)
     
     
+    def _on_labels_search(self, evt=None):
+        """Handles labels search."""
+        
+        # update list
+        self._show_labels()
+    
+    
+    def _on_labels_add(self, evt=None):
+        """Handles labels add new."""
+        
+        # get label
+        query = self._labels_search.GetValue().strip()
+        if not query:
+            return
+        
+        # get same labels
+        same = [x for x in self._labels if x.title.lower() == query.lower()]
+        
+        # add as new label
+        if not same:
+            
+            # init new label
+            label = core.Label()
+            label.checked = True
+            label.title = query
+            
+            # add label to buffer
+            self._labels.append(label)
+        
+        # mark as checked
+        else:
+            for label in same:
+                label.checked = True
+        
+        # clean search
+        self._labels_search.SetValue("")
+        
+        # update labels
+        self._show_labels()
+    
+    
     def _make_ui(self):
         """Makes dialog UI."""
         
@@ -143,6 +190,7 @@ class ArticlesEditDlg(wx.Dialog):
         notebook.AddPage(self._make_info_page(notebook), "Info")
         notebook.AddPage(self._make_abstract_page(notebook), "Abstract")
         notebook.AddPage(self._make_notes_page(notebook), "Notes")
+        notebook.AddPage(self._make_labels_page(notebook), "Labels")
         
         # make buttons
         cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
@@ -315,6 +363,73 @@ class ArticlesEditDlg(wx.Dialog):
         page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
         return page
+    
+    
+    def _make_labels_page(self, notebook):
+        """Makes labels page."""
+        
+        # init page
+        page = wx.Panel(notebook)
+        
+        # init items
+        self._labels_search = wx.TextCtrl(page, -1, "", style=wx.TE_PROCESS_ENTER)
+        self._labels_add_butt = wx.Button(page, label="Add", size=(70, -1))
+        self._labels_list = LabelsList(page, style=wx.NO_FULL_REPAINT_ON_RESIZE | wx.SIMPLE_BORDER)
+        
+        # set checked labels
+        article_labels = set(lb.dbid for lb in self._article.labels)
+        for label in self._labels:
+            label.checked = label.dbid in article_labels
+        
+        # show available labels
+        self._show_labels()
+        
+        # bind events
+        self._labels_search.Bind(wx.EVT_TEXT, self._on_labels_search)
+        self._labels_search.Bind(wx.EVT_TEXT_ENTER, self._on_labels_add)
+        self._labels_add_butt.Bind(wx.EVT_BUTTON, self._on_labels_add)
+        
+        # pack items
+        grid = wx.GridBagSizer(mwx.PANEL_SPACE_MAIN, mwx.PANEL_SPACE_MAIN)
+        
+        grid.Add(self._labels_search, (0,0), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._labels_add_butt, (0,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._labels_list, (1,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        
+        grid.AddGrowableCol(0)
+        grid.AddGrowableRow(1)
+        
+        # pack items
+        page.Sizer = wx.BoxSizer(wx.VERTICAL)
+        page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        
+        return page
+    
+    
+    def _show_labels(self):
+        """Shows labels according to current search."""
+        
+        # get search text
+        query = self._labels_search.GetValue().strip().lower()
+        
+        # get all labels
+        labels = self._labels[:]
+        
+        # apply search filter
+        if query:
+            
+            buff = []
+            words = query.split()
+            
+            for label in labels:
+                title = label.title.lower()
+                if all(map(lambda w: w in title, words)):
+                    buff.append(label)
+            
+            labels = buff
+        
+        # show labels
+        self._labels_list.SetLabels(labels)
     
     
     def _get_journal(self, value):

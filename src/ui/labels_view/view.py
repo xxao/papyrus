@@ -66,7 +66,7 @@ class LabelsView(wx.Dialog):
             return
         
         # get same labels
-        same = [x for x in self._labels if x.title == self._search]
+        same = [lb for lb in self._labels if lb.title.lower() == self._search.lower()]
         
         # add as new label
         if not same:
@@ -139,7 +139,7 @@ class LabelsView(wx.Dialog):
         if self._search:
             
             buff = []
-            words = self._search.split()
+            words = self._search.lower().split()
             
             for label in labels:
                 title = label.title.lower()

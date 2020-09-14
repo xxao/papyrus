@@ -898,8 +898,11 @@ class MainFrame(wx.Frame):
         # get available journals
         journals = self._library.search(core.Query("", core.Journal.NAME))
         
+        # get available labels
+        labels = self._library.search(core.Query("", core.Label.NAME))
+        
         # raise edit dialog
-        dlg = ArticlesEditDlg(self, article, journals)
+        dlg = ArticlesEditDlg(self, article, journals, labels)
         response = dlg.ShowModal()
         dlg.Destroy()
         
@@ -911,6 +914,7 @@ class MainFrame(wx.Frame):
         self._library.update(article)
         
         # refresh collections view
+        self._collections_view.UpdateLabelsCollections()
         self._collections_view.UpdateCounts()
         
         # refresh articles view

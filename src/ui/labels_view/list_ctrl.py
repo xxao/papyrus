@@ -13,11 +13,11 @@ class LabelsList(wx.Panel):
     """Labels list panel."""
     
     
-    def __init__(self, parent):
+    def __init__(self, parent, style=wx.NO_FULL_REPAINT_ON_RESIZE):
         """Initializes labels list panel."""
         
         # init panel
-        wx.Panel.__init__(self, parent, -1, style=wx.NO_FULL_REPAINT_ON_RESIZE)
+        wx.Panel.__init__(self, parent, -1, style=style)
         
         self._labels = []
         

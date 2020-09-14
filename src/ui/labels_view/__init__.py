@@ -3,3 +3,4 @@
 
 from .view import LabelsView
 from .edit_dlg import LabelsEditDlg
+from .list_ctrl import LabelsList
