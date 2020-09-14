@@ -298,7 +298,7 @@ class ArticlesEditDlg(wx.Dialog):
         grid.AddGrowableRow(1)
         grid.AddGrowableRow(3)
         
-        # pack items
+        # add to page
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
         page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
@@ -315,7 +315,7 @@ class ArticlesEditDlg(wx.Dialog):
         text = self._article.abstract if self._article.abstract else ""
         self._abstract_value = wx.TextCtrl(page, -1, text, size=(400,100), style=wx.TE_MULTILINE)
         
-        # pack items
+        # add to page
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
         page.Sizer.Add(self._abstract_value, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
@@ -358,7 +358,7 @@ class ArticlesEditDlg(wx.Dialog):
         grid.AddGrowableCol(1)
         grid.AddGrowableRow(0)
         
-        # pack items
+        # add to page
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
         page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
@@ -390,18 +390,17 @@ class ArticlesEditDlg(wx.Dialog):
         self._labels_add_butt.Bind(wx.EVT_BUTTON, self._on_labels_add)
         
         # pack items
-        grid = wx.GridBagSizer(mwx.PANEL_SPACE_MAIN, mwx.PANEL_SPACE_MAIN)
+        search_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        search_sizer.Add(self._labels_search, 1, wx.ALIGN_CENTER_VERTICAL)
+        search_sizer.Add(self._labels_add_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.EXPAND, 10)
         
-        grid.Add(self._labels_search, (0,0), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-        grid.Add(self._labels_add_butt, (0,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-        grid.Add(self._labels_list, (1,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-        
-        grid.AddGrowableCol(0)
-        grid.AddGrowableRow(1)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(search_sizer, 0, wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        sizer.Add(self._labels_list, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.EXPAND, 10)
         
         # pack items
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
-        page.Sizer.Add(grid, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        page.Sizer.Add(sizer, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
         
         return page
     
