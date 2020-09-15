@@ -476,11 +476,14 @@ class Library(object):
         return count
     
     
-    def merge(self, items, commit=True):
+    def merge(self, master, items, commit=True):
         """
         Merges given items inside database.
         
         Args:
+            master: Author or Journal
+                Master item to keep.
+            
             items: list of Author or Journal
                 Items to be merged.
             
@@ -489,24 +492,19 @@ class Library(object):
         """
         
         # check items
-        if not items or len(items) < 2:
+        if not master or not items:
             return
-        
-        # check DBID
-        for item in items:
-            if not item.dbid:
-                raise AttributeError("Cannot merge items without dbid!")
         
         # assert connection
         close_db = self._db.connect()
         
         # merge authors
-        if isinstance(items[0], Author):
-            self._merge_authors(items)
+        if isinstance(master, Author):
+            self._merge_authors(master, items)
         
         # merge journals
-        elif isinstance(items[0], Journal):
-            self._merge_journals(items)
+        elif isinstance(master, Journal):
+            self._merge_journals(master, items)
         
         # unknown item type
         else:
@@ -1204,30 +1202,16 @@ class Library(object):
         label.title = data['title']
     
     
-    def _merge_authors(self, authors):
-        """Merges authors into single item. This assumes that given authors are
-        the same just the first name is incomplete so the one with the longest
-        first name is taken."""
-        
-        # init master and others
-        master = authors[0]
-        others = []
-        
-        # get master by longest name
-        for author in authors[1:]:
-            if len(author.firstname) > len(master.firstname):
-                others.append(master)
-                master = author
-            else:
-                others.append(author)
+    def _merge_authors(self, master, authors):
+        """Merges authors into single master item."""
         
         # get IDs
         master_id = master.dbid
-        others_ids = [x.dbid for x in others]
-        placeholders = ",".join("?" * len(others))
+        others_ids = [x.dbid for x in authors]
+        placeholders = ",".join("?" * len(authors))
         
         # update articles PDF where the first author will be changed
-        self._update_authors_pdf(master, others)
+        self._update_authors_pdf(master, authors)
         
         # replace author links to master authors
         query = """UPDATE articles_authors
@@ -1243,27 +1227,13 @@ class Library(object):
         self._db.cursor.execute(query, others_ids)
     
     
-    def _merge_journals(self, journals):
-        """Merges journals into single item. This assumes that given journals are
-        the same just the abbreviation is incomplete so the one with the longest
-        abbreviation is taken."""
-        
-        # init master and others
-        master = journals[0]
-        others = []
-        
-        # get master by longest abbreviation
-        for journal in journals[1:]:
-            if journal.abbreviation and (not master.abbreviation or len(journal.abbreviation) > len(master.abbreviation)):
-                others.append(master)
-                master = journal
-            else:
-                others.append(journal)
+    def _merge_journals(self, master, journals):
+        """Merges journals into single master item."""
         
         # get IDs
         master_id = master.dbid
-        others_ids = [x.dbid for x in others]
-        placeholders = ",".join("?" * len(others))
+        others_ids = [x.dbid for x in journals]
+        placeholders = ",".join("?" * len(journals))
         
         # replace journal links to master journal
         query = """UPDATE articles
