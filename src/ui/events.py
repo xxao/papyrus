@@ -39,3 +39,9 @@ LabelsNewEvent, EVT_LABELS_NEW = wx.lib.newevent.NewCommandEvent()
 LabelsTypeEvent, EVT_LABELS_TYPE = wx.lib.newevent.NewCommandEvent()
 LabelsAddEvent, EVT_LABELS_ADD = wx.lib.newevent.NewCommandEvent()
 LabelsApplyEvent, EVT_LABELS_APPLY = wx.lib.newevent.NewCommandEvent()
+
+# events from authors view
+AuthorsSelectionChangedEvent, EVT_AUTHORS_SELECTION_CHANGED = wx.lib.newevent.NewCommandEvent()
+AuthorsQueryChangedEvent, EVT_AUTHORS_QUERY_CHANGED = wx.lib.newevent.NewCommandEvent()
+AuthorsItemActivatedEvent, EVT_AUTHORS_ITEM_ACTIVATED = wx.lib.newevent.NewCommandEvent()
+AuthorsItemContextMenuEvent, EVT_AUTHORS_ITEM_CONTEXT_MENU = wx.lib.newevent.NewCommandEvent()

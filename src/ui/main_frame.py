@@ -29,6 +29,7 @@ from .error_dlg import ErrorDlg
 from .menu_bar import MenuBar
 from .bottom_bar import BottomBar
 from .articles_view import ArticlesView, ArticlesEditDlg
+from .authors_view import AuthorsView
 from .details_view import DetailsView
 from .pdf_view import PDFView
 from .collections_view import CollectionsView, CollectionsEditDlg
@@ -1433,6 +1434,25 @@ class MainFrame(wx.Frame):
         self._search_repository(query)
     
     
+    def _on_authors_list(self, evt):
+        """Shows dialog to manage authors."""
+        
+        # raise authors management dialog
+        dlg = AuthorsView(self, self._library)
+        response = dlg.ShowModal()
+        dlg.Destroy()
+        
+        # check response
+        if response != wx.ID_OK:
+            return
+        
+        # refresh collections view
+        self._collections_view.UpdateCounts()
+        
+        # refresh articles view
+        self._articles_view.ShowArticles()
+    
+    
     def _on_view_pane(self, evt):
         """Handles view event."""
         
@@ -1608,10 +1628,12 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self._on_repository_search, id=ID_REPOSITORY_RECENT_LAST_AUTHOR)
         self.Bind(wx.EVT_MENU, self._on_repository_search, id=ID_REPOSITORY_RECENT_JOURNAL)
         
+        self.Bind(wx.EVT_MENU, self._on_library_analyze, id=ID_LIBRARY_ANALYZE)
+        self.Bind(wx.EVT_MENU, self._on_authors_list, id=ID_AUTHORS_LIST)
+        
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_COLLECTIONS)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_PDF)
         self.Bind(wx.EVT_MENU, self._on_view_pane, id=ID_VIEW_DETAILS)
-        self.Bind(wx.EVT_MENU, self._on_library_analyze, id=ID_LIBRARY_ANALYZE)
     
     
     def _update_config(self):

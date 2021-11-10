@@ -68,3 +68,8 @@ ID_COLLECTIONS_EMPTY_TRASH = wx.NewIdRef()
 ID_LABELS_NEW = wx.NewIdRef()
 ID_LABELS_EDIT = wx.NewIdRef()
 ID_LABELS_DELETE = wx.NewIdRef()
+
+ID_AUTHORS_LIST = wx.NewIdRef()
+ID_AUTHORS_EDIT = wx.NewIdRef()
+ID_AUTHORS_MERGE = wx.NewIdRef()
+ID_AUTHORS_DELETE = wx.NewIdRef()

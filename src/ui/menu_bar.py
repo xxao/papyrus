@@ -128,7 +128,10 @@ class MenuBar(wx.MenuBar):
         menu.AppendSeparator()
         menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
         menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
+        
+        menu.AppendSeparator()
         menu.Append(ID_LIBRARY_ANALYZE, "Analyze Library\t"+HK_LIBRARY_ANALYZE)
+        menu.Append(ID_AUTHORS_LIST, "List Authors...\t"+HK_AUTHORS_LIST)
         
         menu.AppendSeparator()
         menu.Append(ID_QUIT, "Quit Papyrus\t"+HK_QUIT)
