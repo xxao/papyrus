@@ -110,13 +110,13 @@ class RepositoryTopBar(wx.Panel):
         self._search_butt = wx.Button(self, label="Search", size=(95, -1))
         
         self._more_butt = wx.Button(self, label=">>", size=(40, -1))
-        self._more_butt.SetToolTipString("Retrieve next batch of articles")
+        self._more_butt.SetToolTip("Retrieve next batch of articles")
         self._more_butt.Enable(False)
         
         label = "Apply" if self._mode == 'match' else "Import"
         tooltip = "Annotate article by selected record" if self._mode == 'match' else "Import checked articles to library"
         self._ok_butt = wx.Button(self, label=label)
-        self._ok_butt.SetToolTipString(tooltip)
+        self._ok_butt.SetToolTip(tooltip)
         self._ok_butt.Enable(False)
         
         # bind events
@@ -128,8 +128,8 @@ class RepositoryTopBar(wx.Panel):
         # add to sizer
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(self._query_search, 1, wx.ALIGN_CENTER_VERTICAL)
-        sizer.Add(self._search_butt, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 10)
-        sizer.Add(self._more_butt, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 10)
-        sizer.Add(self._ok_butt, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 20)
+        sizer.Add(self._search_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 10)
+        sizer.Add(self._more_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 10)
+        sizer.Add(self._ok_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 20)
         self.Sizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.Sizer.Add(sizer, 1, wx.EXPAND|wx.ALL, 10)
+        self.Sizer.Add(sizer, 1, wx.EXPAND | wx.ALL, 10)

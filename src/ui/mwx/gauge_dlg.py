@@ -23,7 +23,7 @@ class GaugeDlg(wx.Dialog):
         # add message
         self._message = wx.StaticText(self, -1, message)
         self._message.SetFont(wx.SMALL_FONT)
-        self.Sizer.Add(self._message, 0, wx.ALIGN_LEFT|wx.TOP|wx.LEFT|wx.RIGHT, PANEL_SPACE_MAIN)
+        self.Sizer.Add(self._message, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.RIGHT, PANEL_SPACE_MAIN)
         
         # add gauge
         self._gauge = wx.Gauge(self, -1, 100, size=(300, GAUGE_HEIGHT))
@@ -33,7 +33,7 @@ class GaugeDlg(wx.Dialog):
         if self._cancellation is not None:
             cancel_butt = wx.Button(self, -1, "Cancel")
             cancel_butt.Bind(wx.EVT_BUTTON, self.OnCancel)
-            self.Sizer.Add(cancel_butt, 0, wx.ALIGN_RIGHT|wx.RIGHT|wx.BOTTOM, PANEL_SPACE_MAIN)
+            self.Sizer.Add(cancel_butt, 0, wx.ALIGN_RIGHT | wx.RIGHT | wx.BOTTOM, PANEL_SPACE_MAIN)
         
         # display dialog
         self.Layout()
@@ -80,5 +80,5 @@ class GaugeDlg(wx.Dialog):
     def Close(self):
         """Closes panel"""
         
-        #self.MakeModal(False)
+        # self.MakeModal(False)
         self.Destroy()

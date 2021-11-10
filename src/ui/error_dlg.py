@@ -18,7 +18,7 @@ class ErrorDlg(wx.Dialog):
         """Initializes error dialog."""
         
         # init dialog
-        wx.Dialog.__init__(self, parent, -1, title="Application error", size=(210, 350), style=wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP)
+        wx.Dialog.__init__(self, parent, -1, title="Application error", size=(210, 350), style=wx.DEFAULT_DIALOG_STYLE | wx.STAY_ON_TOP)
         self.Bind(wx.EVT_PAINT, self._on_paint)
         
         # makes error message
@@ -98,6 +98,6 @@ class ErrorDlg(wx.Dialog):
         buttons.Add(continue_butt, 0)
         
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(self._exception_value, 1, wx.ALL|wx.EXPAND, mwx.PANEL_SPACE_MAIN)
-        self.Sizer.Add(message_label, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
-        self.Sizer.Add(buttons, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(self._exception_value, 1, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(message_label, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(buttons, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)

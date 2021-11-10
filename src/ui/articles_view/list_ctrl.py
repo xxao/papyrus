@@ -155,7 +155,7 @@ class ArticlesList(wx.Panel):
         names = [c[0] for c in self._columns]
         
         # init list control
-        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER|wxdv.DV_ROW_LINES|wxdv.DV_VERT_RULES|wxdv.DV_MULTIPLE)
+        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER | wxdv.DV_ROW_LINES | wxdv.DV_VERT_RULES | wxdv.DV_MULTIPLE)
         self._list_model = ArticlesListModel(names, self._articles)
         self._list_ctrl.AssociateModel(self._list_model)
         self._list_ctrl.EnableDragSource(mwx.ArticlesIDsDropData().GetFormat())
@@ -192,7 +192,7 @@ class ArticlesList(wx.Panel):
         
         # add to sizer
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND|wx.ALL, mwx.LIST_CTRL_SPACE)
+        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND | wx.ALL, mwx.LIST_CTRL_SPACE)
     
     
     def _init_columns(self):

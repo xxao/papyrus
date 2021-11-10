@@ -89,7 +89,7 @@ class CollectionsEditDlg(wx.Dialog):
         
         self._export_check = wx.CheckBox(self, -1, "Enable automatic export to text file")
         self._export_check.SetValue(self._collection.export)
-        self._export_check.SetToolTipString("Creates a text export with citations when application quits")
+        self._export_check.SetToolTip("Creates a text export with citations when application quits")
         
         cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
         ok_butt = wx.Button(self, wx.ID_OK, "OK")
@@ -108,11 +108,11 @@ class CollectionsEditDlg(wx.Dialog):
         
         # pack items
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
-        grid.Add(title_label, (0,0), flag=wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._title_value, (0,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
-        grid.Add(self._query_label, (1,0), flag=wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._query_value, (1,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
-        grid.Add(self._export_check, (2,1), flag=wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(title_label, (0,0), flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._title_value, (0,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._query_label, (1,0), flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._query_value, (1,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._export_check, (2,1), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
         grid.AddGrowableCol(1)
         
         buttons = wx.BoxSizer(wx.HORIZONTAL)
@@ -120,5 +120,5 @@ class CollectionsEditDlg(wx.Dialog):
         buttons.Add(ok_butt, 0)
         
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(grid, 0, wx.ALL|wx.EXPAND, mwx.PANEL_SPACE_MAIN)
-        self.Sizer.Add(buttons, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(grid, 0, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(buttons, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.ALIGN_RIGHT, mwx.PANEL_SPACE_MAIN)

@@ -88,8 +88,8 @@ class LabelsEditDlg(wx.Dialog):
         
         # pack items
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
-        grid.Add(title_label, (0,0), flag=wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._title_value, (0,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+        grid.Add(title_label, (0,0), flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        grid.Add(self._title_value, (0,1), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
         grid.AddGrowableCol(1)
         
         buttons = wx.BoxSizer(wx.HORIZONTAL)
@@ -97,5 +97,5 @@ class LabelsEditDlg(wx.Dialog):
         buttons.Add(ok_butt, 0)
         
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(grid, 0, wx.ALL|wx.EXPAND, mwx.PANEL_SPACE_MAIN)
-        self.Sizer.Add(buttons, 0, wx.LEFT|wx.RIGHT|wx.BOTTOM, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(grid, 0, wx.ALL | wx.EXPAND, mwx.PANEL_SPACE_MAIN)
+        self.Sizer.Add(buttons, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, mwx.PANEL_SPACE_MAIN)

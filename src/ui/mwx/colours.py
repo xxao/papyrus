@@ -39,7 +39,7 @@ def generate_colour(used_colours=[], default_colours=DEFAULT_COLOURS):
     
     # try to use default colour
     for colour in default_colours:
-        if not colour in used_colours:
+        if colour not in used_colours:
             return colour
     
     # generate random colour
@@ -47,7 +47,7 @@ def generate_colour(used_colours=[], default_colours=DEFAULT_COLOURS):
     while True:
         i += 1
         colour = [random.randrange(0,255), random.randrange(0,255), random.randrange(0,255)]
-        if not colour in used_colours or i == 10000:
+        if colour not in used_colours or i == 10000:
             return colour
 
 

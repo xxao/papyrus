@@ -96,7 +96,7 @@ class LabelsListModel(wxdv.PyDataViewIndexListModel):
         label = self._data[row]
         
         # get column name
-        name =  self._col_names[col]
+        name = self._col_names[col]
         
         # return value
         if name == "checked":

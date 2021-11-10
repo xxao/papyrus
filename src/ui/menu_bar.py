@@ -256,7 +256,7 @@ class MenuBar(wx.MenuBar):
             item = wx.MenuItem(menu, id, text, kind=wx.ITEM_CHECK)
             bullet = images.rating(value, radius, space, outline, fill_unchecked, bgr)
             bullet_checked = images.rating(value, radius, space, outline, fill_checked, bgr)
-            item.SetBitmaps(bullet_checked, bullet)
+            # item.SetBitmaps(bullet_checked, bullet)
             menu.Append(item)
         
         return menu
@@ -287,7 +287,7 @@ class MenuBar(wx.MenuBar):
             item = wx.MenuItem(menu, id, text, kind=wx.ITEM_CHECK)
             bullet = images.bullet(size, outline, wx.Brush(colour, wx.BRUSHSTYLE_SOLID))
             bullet_checked = images.bullet(size, outline_checked, wx.Brush(colour, wx.BRUSHSTYLE_SOLID))
-            item.SetBitmaps(bullet_checked, bullet)
+            # item.SetBitmaps(bullet_checked, bullet)
             menu.Append(item)
         
         return menu

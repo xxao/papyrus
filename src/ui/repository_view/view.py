@@ -27,7 +27,7 @@ class RepositoryView(wx.Dialog):
         width = 1027
         width -= 30 if self._mode == 'match' else 0
         title = "Match Article to PubMed" if self._mode == 'match' else "Search PubMed"
-        wx.Dialog.__init__(self, parent, -1, size=(width, 580), title=title, style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, -1, size=(width, 580), title=title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         
         self._library = library
         self._article = article
@@ -263,7 +263,7 @@ class RepositoryView(wx.Dialog):
         self._top_bar.EnableSearchQuery(True)
         self._top_bar.EnableSearchButton(True)
         self._top_bar.EnableMoreButton(self._results.retstop < self._results.total)
-        self._top_bar.EnableOkButton(self._mode=='search' and any(x.checked for x in self._articles))
+        self._top_bar.EnableOkButton(self._mode == 'search' and any(x.checked for x in self._articles))
         
         # update bottom bar
         self._update_bottom_bar()

@@ -446,7 +446,7 @@ class MainFrame(wx.Frame):
             self._library.delete(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -543,7 +543,7 @@ class MainFrame(wx.Frame):
         self._library.update(label)
         
         # refresh collections view
-        self._collections_view.UpdateLabelsCollections() 
+        self._collections_view.UpdateLabelsCollections()
         self._collections_view.UpdateCounts()
         
         # refresh articles view
@@ -953,7 +953,7 @@ class MainFrame(wx.Frame):
             self._library.delete(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -971,7 +971,7 @@ class MainFrame(wx.Frame):
         self._library.trash(articles, True)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -989,7 +989,7 @@ class MainFrame(wx.Frame):
         self._library.trash(articles, False)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1032,7 +1032,7 @@ class MainFrame(wx.Frame):
             self._library.update(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1080,7 +1080,7 @@ class MainFrame(wx.Frame):
             self._library.update(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1115,7 +1115,7 @@ class MainFrame(wx.Frame):
         
         # refresh collections view
         self._collections_view.UpdateLabelsCollections()
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1174,7 +1174,7 @@ class MainFrame(wx.Frame):
         self._library.update(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1235,7 +1235,7 @@ class MainFrame(wx.Frame):
         self._library.update(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1472,7 +1472,7 @@ class MainFrame(wx.Frame):
         self.AUIManager.SetManagedWindow(self)
         self.AUIManager.SetDockSizeConstraint(0.5, 0.5)
         
-        unlock_ui = config.SETTINGS['unlock_ui'] == True
+        unlock_ui = config.SETTINGS['unlock_ui']
         
         self.AUIManager.AddPane(self._articles_view, wx.aui.AuiPaneInfo().Name("articles").
             CentrePane().MinSize((400,300)).
@@ -1515,7 +1515,7 @@ class MainFrame(wx.Frame):
         art_provider.SetMetric(wx.aui.AUI_DOCKART_SASH_SIZE, mwx.SASH_SIZE)
         art_provider.SetMetric(wx.aui.AUI_DOCKART_GRIPPER_SIZE, mwx.GRIPPER_SIZE)
         art_provider.SetMetric(wx.aui.AUI_DOCKART_GRADIENT_TYPE, wx.aui.AUI_GRADIENT_NONE)
-        #art_provider.SetMetric(wx.aui.AUI_DOCKART_DRAW_SASH_GRIP, False)
+        # art_provider.SetMetric(wx.aui.AUI_DOCKART_DRAW_SASH_GRIP, False)
         self.SetOwnBackgroundColour(mwx.SASH_COLOUR)
         
         # update frame manager
@@ -1665,7 +1665,7 @@ class MainFrame(wx.Frame):
                 self._library.insert(article)
         
         # refresh collections view
-        self._collections_view.UpdateCounts() 
+        self._collections_view.UpdateCounts()
         
         # refresh articles view
         self._articles_view.ShowArticles()
@@ -1689,7 +1689,7 @@ class MainFrame(wx.Frame):
         task.start()
         
         # update gauge while working
-        while task and task.isAlive():
+        while task and task.is_alive():
             gauge.SetMessage(self._progress_message)
             gauge.SetRange(self._progress_max)
             gauge.SetValue(self._progress)
@@ -1735,7 +1735,7 @@ class MainFrame(wx.Frame):
                 core.move_cover_page(
                     path = article.pdf_path,
                     query = config.SETTINGS['cover_remove_tag'],
-                    delete = config.SETTINGS['cover_remove_mode']==2)
+                    delete = config.SETTINGS['cover_remove_mode'] == 2)
             
             # remember articles to match
             if article.doi:
@@ -1821,7 +1821,7 @@ class MainFrame(wx.Frame):
         task.start()
         
         # update gauge while working
-        while task and task.isAlive():
+        while task and task.is_alive():
             gauge.SetMessage(self._progress_message)
             gauge.SetRange(self._progress_max)
             gauge.SetValue(self._progress)

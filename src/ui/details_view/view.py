@@ -98,7 +98,7 @@ class DetailsView(wx.Panel):
         
         # pack UI
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(label, 0, wx.EXPAND|wx.TOP, 80)
+        self.Sizer.Add(label, 0, wx.EXPAND | wx.TOP, 80)
         self.Sizer.Add(self._browser, 1, wx.EXPAND)
         
         # add top line

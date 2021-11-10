@@ -225,7 +225,7 @@ class CollectionsTree(wx.Panel):
         """Makes panel UI."""
         
         # init tree control
-        self._tree_ctrl = wxdv.DataViewTreeCtrl(self, style=wxdv.DV_SINGLE|wxdv.DV_NO_HEADER|wxdv.DV_VARIABLE_LINE_HEIGHT|wx.NO_BORDER)
+        self._tree_ctrl = wxdv.DataViewTreeCtrl(self, style=wxdv.DV_SINGLE | wxdv.DV_NO_HEADER | wxdv.DV_VARIABLE_LINE_HEIGHT | wx.NO_BORDER)
         self._tree_ctrl.SetOwnBackgroundColour(mwx.COLLECTIONS_VIEW_BGR)
         
         # enable drop target

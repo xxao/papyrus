@@ -92,7 +92,7 @@ class RepositoryList(wx.Panel):
         """Makes panel UI."""
         
         # init list control
-        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER|wxdv.DV_ROW_LINES|wxdv.DV_VERT_RULES)
+        self._list_ctrl = wxdv.DataViewCtrl(self, style=wx.NO_BORDER | wxdv.DV_ROW_LINES | wxdv.DV_VERT_RULES)
         
         # associate model
         self._list_model = RepositoryListModel(self._articles)
@@ -111,7 +111,7 @@ class RepositoryList(wx.Panel):
         
         # hide some columns
         self._list_ctrl.Columns[0].SetHidden(True)
-        self._list_ctrl.Columns[2].SetHidden(self._mode=='match')
+        self._list_ctrl.Columns[2].SetHidden(self._mode == 'match')
         
         # set columns properties
         for c in self._list_ctrl.Columns:
@@ -127,4 +127,4 @@ class RepositoryList(wx.Panel):
         
         # add to sizer
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND|wx.ALL, mwx.LIST_CTRL_SPACE)
+        self.Sizer.Add(self._list_ctrl, 1, wx.EXPAND | wx.ALL, mwx.LIST_CTRL_SPACE)

@@ -39,8 +39,8 @@ class MessageDlg(wx.Dialog):
         elements_sizer = wx.BoxSizer(wx.VERTICAL)
         elements_sizer.Add(message_label, 0, wx.ALIGN_LEFT)
         if details:
-            elements_sizer.Add(details_label, 0, wx.ALIGN_LEFT|wx.TOP, 10)
-        elements_sizer.Add(buttons_sizer, 0, wx.ALIGN_RIGHT|wx.TOP, PANEL_SPACE_MAIN)
+            elements_sizer.Add(details_label, 0, wx.ALIGN_LEFT | wx.TOP, 10)
+        elements_sizer.Add(buttons_sizer, 0, wx.ALIGN_RIGHT | wx.TOP, PANEL_SPACE_MAIN)
         
         # init main sizer
         self.Sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -50,10 +50,10 @@ class MessageDlg(wx.Dialog):
             icon = images.ICON_INFO
         if icon is not None and icon is not False:
             bitmap = wx.StaticBitmap(self, -1, icon)
-            self.Sizer.Add(bitmap, 0, wx.TOP|wx.LEFT|wx.BOTTOM, PANEL_SPACE_MAIN)
+            self.Sizer.Add(bitmap, 0, wx.TOP | wx.LEFT | wx.BOTTOM, PANEL_SPACE_MAIN)
         
         # add elements
-        self.Sizer.Add(elements_sizer, 0, wx.ALIGN_BOTTOM|wx.ALIGN_LEFT|wx.ALL, PANEL_SPACE_MAIN)
+        self.Sizer.Add(elements_sizer, 0, wx.ALIGN_BOTTOM | wx.ALIGN_LEFT | wx.ALL, PANEL_SPACE_MAIN)
         
         # fit layout
         self.Layout()

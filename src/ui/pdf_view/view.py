@@ -69,11 +69,11 @@ class PDFView(wx.Panel):
         label.SetForegroundColour((190,190,190))
         
         # make viewer
-        self._viewer = pdfViewer(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style=wx.NO_BORDER|wx.ALIGN_CENTER)
+        self._viewer = pdfViewer(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style=wx.NO_BORDER | wx.ALIGN_CENTER)
         
         # pack UI
         self.Sizer = wx.BoxSizer(wx.VERTICAL)
-        self.Sizer.Add(label, 0, wx.EXPAND|wx.TOP, 80)
+        self.Sizer.Add(label, 0, wx.EXPAND | wx.TOP, 80)
         self.Sizer.Add(self._viewer, 1, wx.EXPAND)
     
     

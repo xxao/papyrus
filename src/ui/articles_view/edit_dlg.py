@@ -263,10 +263,10 @@ class ArticlesEditDlg(wx.Dialog):
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
         
         grid.Add(title_label, (0,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._title_value, (1,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._title_value, (1,0), (1,4), flag=wx.EXPAND)
         
         grid.Add(authors_label, (2,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
-        grid.Add(self._authors_value, (3,0), (1,4), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._authors_value, (3,0), (1,4), flag=wx.EXPAND)
         
         grid.Add(self._authors_switch_check, (4,0), (1,4), flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL)
         
@@ -346,7 +346,7 @@ class ArticlesEditDlg(wx.Dialog):
         # pack items
         grid = wx.GridBagSizer(mwx.GRIDBAG_VSPACE, mwx.GRIDBAG_HSPACE)
         
-        grid.Add(self._notes_value, (0,0), (1,2), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+        grid.Add(self._notes_value, (0,0), (1,2), flag=wx.EXPAND)
         
         grid.Add(rating_label, (1,0), flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
         grid.Add(self._rating_choice, (2,0), flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
@@ -392,11 +392,11 @@ class ArticlesEditDlg(wx.Dialog):
         # pack items
         search_sizer = wx.BoxSizer(wx.HORIZONTAL)
         search_sizer.Add(self._labels_search, 1, wx.ALIGN_CENTER_VERTICAL)
-        search_sizer.Add(self._labels_add_butt, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.EXPAND, 10)
+        search_sizer.Add(self._labels_add_butt, 0, wx.LEFT | wx.EXPAND, 10)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(search_sizer, 0, wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-        sizer.Add(self._labels_list, 1, wx.ALIGN_CENTER_VERTICAL | wx.TOP | wx.EXPAND, 10)
+        sizer.Add(search_sizer, 0, wx.EXPAND)
+        sizer.Add(self._labels_list, 1, wx.TOP | wx.EXPAND, 10)
         
         # pack items
         page.Sizer = wx.BoxSizer(wx.VERTICAL)
