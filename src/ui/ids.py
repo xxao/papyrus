@@ -12,6 +12,7 @@ ID_VIEW_DETAILS = wx.NewIdRef()
 
 ID_LIBRARY_NEW = wx.NewIdRef()
 ID_LIBRARY_OPEN = wx.NewIdRef()
+ID_LIBRARY_BACKUP = wx.NewIdRef()
 ID_LIBRARY_ANALYZE = wx.NewIdRef()
 
 ID_ARTICLES_SEARCH = wx.NewIdRef()

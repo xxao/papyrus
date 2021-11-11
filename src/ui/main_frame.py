@@ -240,6 +240,34 @@ class MainFrame(wx.Frame):
         self.OpenDocuments([path])
     
     
+    def _on_library_backup(self, evt=None):
+        """Handles backup library event."""
+        
+        # create backup
+        success = self._library.backup()
+        
+        # get message
+        if success:
+            title = "Library Backup"
+            message = "Backup copy of your library database\nhas been created successfully."
+            details = ""
+        else:
+            title = "Error"
+            message = "Cannot create your library backup."
+            details = "Please make sure you have write access\nfor your library location."
+        
+        # show message
+        close_butt = mwx.DlgButton(wx.ID_CANCEL, "Close", size=(80,-1), default=True)
+        dlg = mwx.MessageDlg(self,
+            id = -1,
+            title = title,
+            message = message,
+            details = details,
+            buttons = [close_butt])
+        dlg.ShowModal()
+        dlg.Destroy()
+    
+    
     def _on_library_analyze(self, evt):
         """Shows library statistics view."""
         
@@ -1578,6 +1606,7 @@ class MainFrame(wx.Frame):
         
         self.Bind(wx.EVT_MENU, self._on_library_new, id=ID_LIBRARY_NEW)
         self.Bind(wx.EVT_MENU, self._on_library_open, id=ID_LIBRARY_OPEN)
+        self.Bind(wx.EVT_MENU, self._on_library_backup, id=ID_LIBRARY_BACKUP)
 
         self.Bind(wx.EVT_MENU, self._on_articles_search, id=ID_ARTICLES_SEARCH)
         self.Bind(wx.EVT_MENU, self._on_articles_open_pdf, id=ID_ARTICLES_OPEN_PDF)

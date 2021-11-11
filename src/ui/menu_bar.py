@@ -49,6 +49,7 @@ class MenuBar(wx.MenuBar):
         self.Enable(ID_LABELS_NEW, self._library is not None)
         self.Enable(ID_ARTICLES_NEW, self._library is not None)
         self.Enable(ID_ARTICLES_IMPORT, self._library is not None)
+        self.Enable(ID_LIBRARY_BACKUP, self._library is not None)
         
         # set others
         self.SetCollection()
@@ -128,6 +129,7 @@ class MenuBar(wx.MenuBar):
         menu.AppendSeparator()
         menu.Append(ID_LIBRARY_NEW, "New Library...\t"+HK_LIBRARY_NEW)
         menu.Append(ID_LIBRARY_OPEN, "Open Library...\t"+HK_LIBRARY_OPEN)
+        menu.Append(ID_LIBRARY_BACKUP, "Backup Library\t"+HK_LIBRARY_BACKUP)
         
         menu.AppendSeparator()
         menu.Append(ID_LIBRARY_ANALYZE, "Analyze Library\t"+HK_LIBRARY_ANALYZE)

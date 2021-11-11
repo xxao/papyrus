@@ -666,13 +666,17 @@ class Library(object):
         """Creates current database backup."""
         
         # get time stamp
-        stamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d%H%M%S')
+        stamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H-%M-%S')
         
         # init file name
         filename = "%s_%s.bak" % (self.db_path, stamp)
         
         # duplicate file
-        shutil.copy(self.db_path, filename)
+        try:
+            shutil.copy(self.db_path, filename)
+            return True
+        except IOError:
+            return False
     
     
     def _insert_article(self, article):
