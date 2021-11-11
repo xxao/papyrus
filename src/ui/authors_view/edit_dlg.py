@@ -11,7 +11,7 @@ class AuthorsEditDlg(wx.Dialog):
     """Dialog to add/edit author."""
     
     
-    def __init__(self, parent, author):
+    def __init__(self, parent, author, mode):
         """Initializes author dialog."""
         
         # init dialog
@@ -20,6 +20,7 @@ class AuthorsEditDlg(wx.Dialog):
         
         # init buffers
         self._author = author
+        self._mode = mode
         
         # make UI
         self._make_ui()
@@ -82,7 +83,7 @@ class AuthorsEditDlg(wx.Dialog):
         self._initials_value = wx.TextCtrl(self, -1, text, size=(200, -1), style=wx.TE_PROCESS_ENTER)
         
         cancel_butt = wx.Button(self, wx.ID_CANCEL, "Cancel")
-        ok_butt = wx.Button(self, wx.ID_OK, "OK")
+        ok_butt = wx.Button(self, wx.ID_OK, "Merge" if self._mode == "merge" else "Update")
         
         # bind events
         self._lastname_value.Bind(wx.EVT_TEXT_ENTER, self._on_ok)

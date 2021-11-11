@@ -148,7 +148,7 @@ class AuthorsView(wx.Dialog):
         author = authors[0]
         
         # raise edit dialog
-        dlg = AuthorsEditDlg(self, author)
+        dlg = AuthorsEditDlg(self, author, "edit")
         response = dlg.ShowModal()
         dlg.Destroy()
         
@@ -177,7 +177,7 @@ class AuthorsView(wx.Dialog):
         master = max(authors, key=lambda a: len(a.firstname))
         
         # raise edit dialog
-        dlg = AuthorsEditDlg(self, master)
+        dlg = AuthorsEditDlg(self, master, "merge")
         response = dlg.ShowModal()
         dlg.Destroy()
         
