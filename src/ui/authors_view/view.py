@@ -22,7 +22,7 @@ class AuthorsView(wx.Dialog):
         """Initializes authors view panel."""
         
         # init panel
-        wx.Dialog.__init__(self, parent, -1, size=(470, 400), title="Author's List", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        wx.Dialog.__init__(self, parent, -1, size=(470, 400), title="Authors List", style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
         self.Bind(wx.EVT_CLOSE, self._on_close)
         
         # set library
