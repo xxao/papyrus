@@ -166,6 +166,10 @@ class RepositoryView(wx.Dialog):
     def _set_ids(self):
         """Gets DOIs of all available articles."""
         
+        # check library
+        if self._library is None:
+            return
+        
         # get ids
         data = self._library.query("SELECT doi, pmid FROM articles")
         
