@@ -50,7 +50,7 @@ def doi_from_pdf(path):
     for page in doc:
         
         # get page text
-        text = page.getText()
+        text = page.get_text()
         
         # retrieve DOI
         doi = parse_doi(text)
@@ -182,7 +182,7 @@ def search_pdf(path, query):
         i += 1
         
         # get page text
-        text = page.getText()
+        text = page.get_text()
         
         # remember matching page
         if query in text:

@@ -4,10 +4,16 @@
 # import modules
 import io
 import os.path
+import fitz
 import wx
 from wx.lib.pdfviewer import pdfViewer
 
 from .. import mwx
+
+# fix wxPython compatibility
+fitz.Document.pageCount = fitz.Document.page_count
+fitz.Document.loadPage = fitz.Document.load_page
+fitz.Page.getPixmap = fitz.Page.get_pixmap
 
 
 class PDFView(wx.Panel):

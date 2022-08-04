@@ -14,7 +14,10 @@ class Papyrus(wx.App):
     
     def OnInit(self):
         """Initializes application."""
-        
+
+        # fixes some wxPython issues
+        self.SetAssertMode(wx.APP_ASSERT_SUPPRESS)
+
         # init config
         import ui.config
         if not ui.config.load():
