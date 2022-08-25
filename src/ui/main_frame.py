@@ -496,8 +496,13 @@ class MainFrame(wx.Frame):
         # export collections
         for collection in collections:
             
+            # get query
+            if collection.query:
+                query = core.Query(collection.query, core.Article.NAME)
+            else:
+                query = core.Query("%s[COLLECTIONID]" % collection.dbid, core.Article.NAME)
+            
             # get articles
-            query = core.Query("%s[COLLECTIONID]" % collection.dbid, core.Article.NAME)
             articles = self._library.search(query)
             
             # make export
